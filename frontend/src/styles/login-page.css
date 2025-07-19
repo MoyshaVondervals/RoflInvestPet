@@ -1,0 +1,126 @@
+.authority-page-container1 {
+  width: 370px;
+  min-height: 440px;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  /*background-color: var(--dl-color-theme-neutral-light);*/
+  transition: min-height 0.2s ease, height 0.2s ease;
+}
+
+.authority-page-container2 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: var(--dl-layout-radius-radius4);
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: var(--dl-color-theme-primary2);
+}
+
+.authority-page-header {
+  fill: var(--dl-color-theme-secondary1);
+  color: var(--dl-color-theme-secondary1);
+  margin-top: var(--dl-layout-space-twounits);
+  border-radius: var(--dl-layout-radius-radius4);
+  margin-bottom: var(--dl-layout-space-twounits);
+}
+
+.authority-page-input {
+  fill: var(--dl-color-theme-accent1);
+  color: var(--dl-color-theme-accent1);
+  width: 277px;
+  height: 41px;
+  margin-top: 0px;
+  text-align: center;
+  margin-left: var(--dl-layout-space-unit);
+  border-color: var(--dl-color-theme-secondary2);
+  border-width: 0px;
+  margin-right: var(--dl-layout-space-unit);
+  border-radius: var(--dl-layout-radius-radius4);
+  margin-bottom: var(--dl-layout-space-oneandhalfunits);
+  padding-right: 1rem;
+  background-color: var(--dl-color-theme-neutral-dark);
+
+}
+
+
+
+.authority-page-submit-button {
+  fill: var(--dl-color-theme-primary2);
+  color: var(--dl-color-theme-primary2);
+  width: 277px;
+  height: 41px;
+  margin-top: 0px;
+  margin-left: var(--dl-layout-space-halfunit);
+  border-width: 0px;
+  margin-right: var(--dl-layout-space-halfunit);
+  border-radius: var(--dl-layout-radius-radius4);
+  margin-bottom: var(--dl-layout-space-halfunit);
+  background-color: var(--dl-color-theme-primary1);
+
+}
+
+.login-page-text2 {
+  fill: var(--dl-color-theme-primary2);
+  color: var(--dl-color-theme-primary2);
+  height: 100%;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.dont-have-account{
+  fill: var(--dl-color-theme-accent2);
+  color: var(--dl-color-theme-accent2);
+  font-size: 14px;
+  font-style: normal;
+  width: 141px;
+  height: 28px;
+  margin-top: var(--dl-layout-space-halfunit);
+  border-width: 0px;
+  margin-bottom: var(--dl-layout-space-halfunit);
+  background-color: var(--dl-color-theme-primary2);
+}
+
+.login-page-text3 {
+  fill: var(--dl-color-theme-accent2);
+  color: var(--dl-color-theme-accent2);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  border-radius: var(--dl-layout-radius-radius4);
+}
+
+.login-page-text4 {
+  display: inline-block;
+}
+
+.login-page-text5 {
+  display: inline-block;
+}
+
+.login-page-text6 {
+  display: inline-block;
+}
+/* Новый стиль для центрирования */
+.login-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  width: 100%;
+}
+.message {
+  width: auto;
+  min-height: 28px; /* ✅ это вместо жёсткого height */
+  padding: 0.5rem 1rem;
+  background-color: var(--dl-color-theme-primary2);
+  color: var(--dl-color-theme-accent2);
+  font-size: 14px;
+  text-align: center;
+  word-wrap: break-word; /* ✅ длинный текст переносится */
+  word-break: break-word;
+  line-height: 1.4;
+  white-space: pre-line;
+}

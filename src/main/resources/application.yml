@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: miniCasino
+datasource:
+  url: jdbc:postgresql://localhost:5432/postgres
+  driverClassName: org.postgresql.Driver
+  username: myuser
+  password: secret
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+token:
+  signing:
+    key: NjU0MzIxMDEwMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY=

@@ -46,6 +46,7 @@ body::before {
     --dl-layout-radius-inputradius: 24px;
     --dl-layout-radius-buttonradius: 24px;
     --dl-layout-space-oneandhalfunits: 24px;
+    --dl-color-theme-primary1-pushed: #1a861f;
 }
 
 .button {

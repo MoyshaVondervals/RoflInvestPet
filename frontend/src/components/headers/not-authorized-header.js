@@ -23,6 +23,11 @@ const NotAuthorizedHeader = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const mobileNavigate = (route) =>{
+    navigate(route)
+    toggleMobileMenu()
+  }
+
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
   };
@@ -43,7 +48,7 @@ const NotAuthorizedHeader = () => {
             <nav className="nav-links">
               <a className="nav-link" onClick={() => navigate("/about")}>О проекте</a>
               <a  className="nav-link" onClick={() => navigate("/aboutDevelopment")}>О разработке</a>
-              <a  className="nav-link">Сообщить о проблеме</a>
+              <a  className="nav-link" onClick={() => navigate('/auth/sign-in')}>Сообщить о проблеме</a>
             </nav>
             <div className="auth-buttons">
               <button className="login-btn button">
@@ -87,14 +92,14 @@ const NotAuthorizedHeader = () => {
                 </div>
               </div>
               <nav className="mobile-links">
-                <a  className="mobile-link" onClick={()=>navigate("/about")}>О проекте</a>
-                <a  className="mobile-link" onClick={()=>navigate("/aboutDevelopment")}>Разработчик</a>
+                <a  className="mobile-link" onClick={()=>mobileNavigate("/about")}>О проекте</a>
+                <a  className="mobile-link" onClick={()=>mobileNavigate("/aboutDevelopment")}>Разработчик</a>
               </nav>
               <div className="mobile-auth-buttons">
-                <button className="mobile-login button" onClick={() => navigate('/auth/sign-in')}>
+                <button className="mobile-login button" onClick={() => mobileNavigate('/auth/sign-in')}>
                   <span>Вход</span>
                 </button>
-                <button className="mobile-register button" onClick={() => navigate('/auth/sign-up')}>
+                <button className="mobile-register button" onClick={() => mobileNavigate('/auth/sign-up')}>
                   <span>Регистрация</span>
                 </button>
               </div>

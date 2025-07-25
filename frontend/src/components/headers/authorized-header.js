@@ -3,12 +3,13 @@ import '../../styles/header.css';
 import logo from "../../styles/resources/roflInves.jpg"
 import {clearAuthData} from "../../redux/authSlice";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const Header = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const role = useSelector((state) => state.auth.role);
 
   const handleLogout = () => {
     dispatch(clearAuthData());
@@ -18,6 +19,10 @@ const Header = () => {
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
+  const mobileNavigate = (route) =>{
+    navigate(route)
+    toggleMobileMenu()
+  }
 
   return (
       <div className="header-container">
@@ -36,7 +41,13 @@ const Header = () => {
               <span className="nav-link">Рынок</span>
               <span className="nav-link">Новости</span>
               <span className="nav-link" onClick={()=>navigate("/about")}>О проекте</span>
-              <span className="nav-link">Сообщить о проблеме</span>
+              <span className="nav-link" onClick={()=>navigate("/bugReportPage")}>Сообщить о проблеме</span>
+
+              {role === "ROLE_ADMIN" && (
+                  <span className="nav-link" onClick={() => navigate("/admin")}>
+      Управление
+    </span>
+              )}
             </nav>
             <div className="nav-buttons">
               <button className="logout-btn button"
@@ -73,8 +84,14 @@ const Header = () => {
                 <span className="mobile-link">Главная</span>
                 <span className="mobile-link">Рынок</span>
                 <span className="mobile-link">Новости</span>
-                <span className="mobile-link" onClick={()=>navigate("/about")}>О проекте</span>
-                <span className="mobile-link">Сообщить о проблеме</span>
+                <span className="mobile-link" onClick={() => mobileNavigate("/about")}>О проекте</span>
+                <span className="mobile-link" onClick={() => mobileNavigate("/bugReportPage")}>Сообщить о проблеме</span>
+
+                {role === "ROLE_ADMIN" && (
+                    <span className="mobile-link" onClick={() => mobileNavigate("/admin")} >
+      Управление
+    </span>
+                )}
               </nav>
               <div className="mobile-buttons">
                 <button className="mobile-logout button"

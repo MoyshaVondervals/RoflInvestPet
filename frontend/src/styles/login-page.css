@@ -61,6 +61,9 @@
   background-color: var(--dl-color-theme-primary1);
 
 }
+.authority-page-submit-button:active{
+  background-color: var(--dl-color-theme-primary1-pushed);
+}
 
 .login-page-text2 {
   fill: var(--dl-color-theme-primary2);

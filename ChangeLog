@@ -1,11 +1,19 @@
 BACK:
-   SpringSecurity using jwt
-   database with users table
+   bug report table
+   fixed problems with user service
+   added changing role to admin
+   fixed problems with auth response (added new dto)
+   fixed deprecated code
+   changed exceptions
 Front:
-   Login and password
-   Private routes
-   Pages about projects and about development
-   React+redux
+   fixed login and register page
+   fixed ux in mobile version
+   added bug report page
+   added become admin page
+   added link to admin page what depends on role
+   added role to slicer and Private route logic
+
+
 
 
 

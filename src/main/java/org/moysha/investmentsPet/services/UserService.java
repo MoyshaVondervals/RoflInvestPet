@@ -2,6 +2,7 @@ package org.moysha.investmentsPet.services;
 
 import lombok.RequiredArgsConstructor;
 import org.moysha.investmentsPet.enums.Role;
+import org.moysha.investmentsPet.exceptions.MessageException;
 import org.moysha.investmentsPet.models.User;
 import org.moysha.investmentsPet.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,9 +21,9 @@ public class UserService {
 
     public User create(User user) {
         if (repository.existsByUsername(user.getUsername())) {
-            throw new RuntimeException("Пользователь с таким никнеймом уже существует");
+            throw new MessageException("Пользователь с таким никнеймом уже существует");
         } else if (repository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Почта занята");
+            throw new MessageException("Почта занята");
         }
         return save(user);
     }
@@ -41,11 +42,15 @@ public class UserService {
         return getByUsername(username);
     }
 
-    @Deprecated
-    public void getAdmin() {
+
+    public void setRole() {
         var user = getCurrentUser();
         user.setRole(Role.ROLE_ADMIN);
         save(user);
+    }
+    public Role getUserRole(String username) {
+        User user = getByUsername(username);
+        return user.getRole();
     }
 
 }

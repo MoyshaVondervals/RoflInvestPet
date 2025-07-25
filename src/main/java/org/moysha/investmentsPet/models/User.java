@@ -2,10 +2,12 @@ package org.moysha.investmentsPet.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.moysha.investmentsPet.enums.InvestmentStatus;
 import org.moysha.investmentsPet.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,6 +33,13 @@ public class User implements UserDetails {
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "investor_status",nullable = false)
+    private InvestmentStatus investorStatus;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)

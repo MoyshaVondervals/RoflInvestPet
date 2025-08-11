@@ -1,17 +1,10 @@
 BACK:
-   bug report table
-   fixed problems with user service
-   added changing role to admin
-   fixed problems with auth response (added new dto)
-   fixed deprecated code
-   changed exceptions
+   added stocks(create and delete stock)
+    bug fix
 Front:
-   fixed login and register page
-   fixed ux in mobile version
-   added bug report page
-   added become admin page
-   added link to admin page what depends on role
-   added role to slicer and Private route logic
+    added admin page for stocks
+
+
 
 
 

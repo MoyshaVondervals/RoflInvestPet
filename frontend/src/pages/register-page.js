@@ -1,14 +1,12 @@
-import React, {Fragment, useState} from 'react'
+import React, {useState} from 'react'
 
 import PropTypes from 'prop-types'
 
 import '../styles/login-page.css'
-import NotAuthorizedHeader from "../components/headers/not-authorized-header";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {setAuthData} from "../redux/authSlice";
-import Header from "../components/headers/Header";
 
 const RegisterPage = () => {
   const [message, setMessage] = useState('')
@@ -41,11 +39,15 @@ const RegisterPage = () => {
 
     }catch (error) {
       console.error('Register failed:', error);
-      setMessage(
-          [error.response.data.message, error.response.data.username, error.response.data.email, error.response.data.password]
-              .filter(Boolean) // убираем undefined/null
-              .join('\n')
-      );
+      if (error.response && error.response.data) {
+        const errorMessages = Object.values(error.response.data)
+            .filter(Boolean)
+            .join('\n\n');
+
+        setMessage(errorMessages);
+      } else {
+        setMessage("Сервер не отвечает");
+      }
     }
 
   }

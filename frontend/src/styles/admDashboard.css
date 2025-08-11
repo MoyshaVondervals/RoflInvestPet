@@ -1,0 +1,145 @@
+.admin-dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    padding: 2rem;
+    background-color: var(--dl-color-theme-primary2);
+    box-sizing: border-box;
+}
+
+.admin-dashboard-container {
+     width: fit-content;
+     max-width: 800px;
+     background-color: #fff;
+     border-radius: var(--dl-layout-radius-radius4);
+     padding: 2rem;
+     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+     display: flex;
+     flex-direction: column;
+     gap: 1.5rem;
+     box-sizing: border-box;
+ }
+
+/* Горизонтальный — используется в AdmStocks (меню + таблица) */
+.admin-dashboard-container-row {
+    width: 100%;
+    max-width: 1100px;
+    background-color: #fff;
+    border-radius: var(--dl-layout-radius-radius4);
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    box-sizing: border-box;
+}
+
+/* ===== ЛЕВАЯ КОЛОНКА ===== */
+.menu, .menu-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Кнопка (блок-единица) */
+.dashboard-menu-unit {
+    background-color: var(--dl-color-theme-neutral-light);
+    border-radius: var(--dl-layout-radius-radius8);
+    padding: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-menu-unit:hover {
+    background-color: #beffcb;
+    transform: translateY(-2px);
+}
+
+.dashboard-menu-unit h1 {
+    margin: 0 0 0.5rem;
+    color: var(--dl-color-theme-secondary1);
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.dashboard-menu-unit p {
+    color: var(--dl-color-theme-secondary2);
+    margin: 0;
+    text-align: center;
+    font-size: 1rem;
+}
+
+/* ===== ПРАВАЯ КОЛОНКА (таблица) ===== */
+.table-panel {
+    flex: 2;
+    overflow-x: auto;
+}
+
+/* Стили таблицы */
+.stocks-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.stocks-table th,
+.stocks-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.stocks-table th {
+    background-color: var(--dl-color-theme-neutral-light);
+    color: #333;
+}
+
+/* ===== АДАПТАЦИЯ ===== */
+@media (max-width: 768px) {
+    .admin-dashboard-container-row {
+        flex-direction: column;
+    }
+
+    .table-panel,
+    .menu-panel,
+    .menu {
+        width: 100%;
+    }
+
+    .dashboard-menu-unit h1 {
+        font-size: 1.25rem;
+    }
+
+    .dashboard-menu-unit p {
+        font-size: 0.95rem;
+    }
+
+    .stocks-table th,
+    .stocks-table td {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-menu-unit h1 {
+        font-size: 1.1rem;
+    }
+
+    .dashboard-menu-unit p {
+        font-size: 0.85rem;
+    }
+}
+
+.stock-logo{
+    height: 50px;
+    max-width: 50px;
+    border-radius: 50%;
+
+}

@@ -1,0 +1,82 @@
+import React, {Fragment, useState} from 'react'
+import PropTypes from 'prop-types'
+import '../../styles/login-page.css'
+import NotAuthorizedHeader from "../../components/headers/not-authorized-header";
+import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setAuthData, updateRole} from "../../redux/authSlice";
+import axios from "axios";
+
+
+
+const DeleteStock = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [message, setMessage] = useState('')
+    const [ticker, setTicker] = useState('')
+    const token = useSelector((state) => state.auth.token);
+
+    const handleSubmit = async () => {
+        try{
+
+            const response = await axios.post('http://localhost:8080/stocks/deleteStock',{
+                    ticker: ticker.toUpperCase()
+                }
+                ,{
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+
+
+        }catch (error) {
+            console.error('Failed to delete stock:', error);
+            if (error.response && error.response.data) {
+                const errorMessages = Object.values(error.response.data)
+                    .filter(Boolean)
+                    .join('\n\n');
+
+                setMessage(errorMessages);
+            } else {
+                setMessage("Сервер не отвечает");
+            }
+        }
+
+    }
+    return (
+        <div>
+
+            <div className="login-page-wrapper">
+                <div className={`authority-page-container1`}>
+                    <div className="authority-page-container2">
+                        <h1 className="authority-page-header">
+                            Удалить акцию
+                        </h1>
+                        <input
+                            type="text"
+                            required
+                            autoFocus
+                            placeholder="Тикер"
+                            autoComplete="on"
+                            className="authority-page-input input"
+                            onChange={(e) => setTicker(e.target.value)}
+                        />
+
+
+                        <button type="submit" className="authority-page-delete-button button"
+                                onClick={handleSubmit}>
+                            Удалить
+                        </button>
+                        <div className="message">{message}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
+}
+
+export default DeleteStock;

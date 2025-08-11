@@ -25,7 +25,7 @@ body::before {
     --dl-color-theme-accent2: #e3401bff;
     --dl-layout-radius-round: 50%;
     --dl-layout-size-xxlarge: 288px;
-    --dl-color-theme-primary1: #1fa025ff;
+    --dl-color-theme-primary1: #1fa038;
     --dl-color-theme-primary2: #ffffff;
     --dl-layout-size-maxwidth: 1400px;
     --dl-layout-radius-radius2: 2px;
@@ -39,9 +39,9 @@ body::before {
     --dl-layout-space-fiveunits: 80px;
     --dl-layout-space-fourunits: 64px;
     --dl-layout-space-threeunits: 48px;
-    --dl-color-theme-neutral-dark: #e8e8e8ff;
+    --dl-color-theme-neutral-dark: #ebebeb;
     --dl-layout-radius-cardradius: 8px;
-    --dl-color-theme-neutral-light: #e8e8e8ff;
+    --dl-color-theme-neutral-light: #f5f5f5;
     --dl-layout-radius-imageradius: 8px;
     --dl-layout-radius-inputradius: 24px;
     --dl-layout-radius-buttonradius: 24px;
@@ -85,9 +85,9 @@ body::before {
 
 .list {
     width: 100%;
-    margin: 1em 0px 1em 0px;
+    margin: 1em 0 1em 0;
     display: block;
-    padding: 0px 0px 0px 1.5rem;
+    padding: 0 0 0 1.5rem;
     list-style-type: none;
     list-style-position: outside;
 }
@@ -202,34 +202,34 @@ body::before {
 
 .thq-heading-1 {
     font-size: 48px;
-    font-family: STIX Two Text;
+    font-family: STIX Two Text, serif;
     font-weight: 700;
     line-height: 1.5;
 }
 
 .thq-heading-2 {
     font-size: 35px;
-    font-family: STIX Two Text;
+    font-family: STIX Two Text, serif;
     font-weight: 600;
     line-height: 1.5;
 }
 
 .thq-heading-3 {
     font-size: 26px;
-    font-family: STIX Two Text;
+    font-family: STIX Two Text, serif;
     font-weight: 600;
     line-height: 1.5;
 }
 
 .thq-body-large {
     font-size: 18px;
-    font-family: Noto Sans;
+    font-family: Noto Sans, serif;
     line-height: 1.5;
 }
 
 .thq-body-small {
     font-size: 16px;
-    font-family: Noto Sans;
+    font-family: Noto Sans, serif;
     line-height: 1.5;
 }
 
@@ -326,7 +326,7 @@ body::before {
 }
 
 .thq-box-shadow {
-    box-shadow: 0px 0px 5px -2px var(--dl-color-theme-neutral-dark);
+    box-shadow: 0 0 5px -2px var(--dl-color-theme-neutral-dark);
 }
 
 .thq-grid-3 {
@@ -561,7 +561,7 @@ body::before {
 
 .Content {
     font-size: 16px;
-    font-family: Inter;
+    font-family: Inter, serif;
     font-weight: 400;
     line-height: 1.15;
     text-transform: none;

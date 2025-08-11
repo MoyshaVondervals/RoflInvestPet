@@ -13,7 +13,7 @@
     align-items: center;
     min-height: 440px;
     margin-top: 5%;
-    width: 110%;
+    width: 100%;
 }
 
 .about-page-container {
@@ -90,10 +90,10 @@
     width: 90%;
     height: 41px;
     min-height: 41px;
-    margin-top: 0px;
+    margin-top: 0;
     margin-left: var(--dl-layout-space-unit);
     border-color: var(--dl-color-theme-secondary2);
-    border-width: 0px;
+    border-width: 0;
     margin-right: var(--dl-layout-space-unit);
     border-radius: var(--dl-layout-radius-radius4);
     margin-bottom: var(--dl-layout-space-oneandhalfunits);
@@ -107,11 +107,11 @@
     width: 90%;
     height: 200px;
     min-height: 200px;
-    margin-top: 0px;
+    margin-top: 0;
     resize: vertical;
     margin-left: var(--dl-layout-space-unit);
     border-color: var(--dl-color-theme-secondary2);
-    border-width: 0px;
+    border-width: 0;
     margin-right: var(--dl-layout-space-unit);
     border-radius: var(--dl-layout-radius-radius4);
     margin-bottom: var(--dl-layout-space-oneandhalfunits);

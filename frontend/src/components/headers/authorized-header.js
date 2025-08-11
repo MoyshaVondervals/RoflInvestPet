@@ -44,7 +44,7 @@ const Header = () => {
               <span className="nav-link" onClick={()=>navigate("/bugReportPage")}>Сообщить о проблеме</span>
 
               {role === "ROLE_ADMIN" && (
-                  <span className="nav-link" onClick={() => navigate("/admin")}>
+                  <span className="nav-link" onClick={() => navigate("/adminDashboard")}>
       Управление
     </span>
               )}
@@ -88,7 +88,7 @@ const Header = () => {
                 <span className="mobile-link" onClick={() => mobileNavigate("/bugReportPage")}>Сообщить о проблеме</span>
 
                 {role === "ROLE_ADMIN" && (
-                    <span className="mobile-link" onClick={() => mobileNavigate("/admin")} >
+                    <span className="mobile-link" onClick={() => mobileNavigate("/adminDashboard")} >
       Управление
     </span>
                 )}

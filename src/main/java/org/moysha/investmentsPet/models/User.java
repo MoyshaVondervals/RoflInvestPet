@@ -2,6 +2,8 @@ package org.moysha.investmentsPet.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.moysha.investmentsPet.enums.InvestmentStatus;
 import org.moysha.investmentsPet.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,6 +46,15 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
+
+    @Column(name = "bio")
+    private String bio;
+
+
+    @Lob
+    @JdbcTypeCode(SqlTypes.BINARY)
+    @Column(name = "user_avatar", columnDefinition = "bytea")
+    private byte[] userAvatar;
 
 
     @Override

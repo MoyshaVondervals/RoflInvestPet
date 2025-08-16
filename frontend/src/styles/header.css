@@ -203,13 +203,26 @@
   font-weight: 700;
 }
 
-.logout-btn, .mobile-logout{
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logout-btn, .mobile-logout {
   background-color: var(--dl-color-theme-accent2);
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
 }
-.logout-btn span, .mobile-logout span{
+
+
+.user-icon {
+  height: 35px;
+  width: 35px;
+  object-fit: contain;
+}
+.logout-btn span, .mobile-logout span {
   color: white;
   font-weight: 700;
 }

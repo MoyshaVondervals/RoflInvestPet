@@ -1,4 +1,4 @@
-import AuthorizedHeader from "../components/headers/authorized-header";
+
 
 const Dashboard = () => {
 

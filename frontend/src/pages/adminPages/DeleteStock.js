@@ -1,10 +1,7 @@
-import React, {Fragment, useState} from 'react'
-import PropTypes from 'prop-types'
+import React, { useState} from 'react'
 import '../../styles/login-page.css'
-import NotAuthorizedHeader from "../../components/headers/not-authorized-header";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {setAuthData, updateRole} from "../../redux/authSlice";
 import axios from "axios";
 
 

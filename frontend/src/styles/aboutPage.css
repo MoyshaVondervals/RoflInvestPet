@@ -17,7 +17,8 @@
 }
 
 .about-page-container {
-    width: 70%;
+    min-width: 30%;
+    max-width: 70%;
     min-height: 440px;
     display: flex;
     position: relative;
@@ -79,10 +80,7 @@
 
     width: 90%;
 }
-/*Table{*/
-/*    max-height: 500px;*/
-/*    max-width: 95%;*/
-/*}*/
+
 
 .bug_report-page-title-input {
     fill: var(--dl-color-theme-accent1);

@@ -1,5 +1,6 @@
 package org.moysha.investmentsPet.services;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.moysha.investmentsPet.dto.AuthRespForm;
@@ -28,6 +29,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final BrokerageAccountService brokerageAccountService;
 
+    @Transactional
     public ResponseEntity<AuthRespForm> sugnUp(SignUpRequest request) {
         var user = User.builder()
                 .username(request.getUsername())

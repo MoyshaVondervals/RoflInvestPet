@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/header.css';
-import logo from "../../styles/resources/roflInves.jpg"
+import logo from "../../styles/resources/roflInves-removebg-preview.png"
 import {clearAuthData} from "../../redux/authSlice";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -51,9 +51,10 @@ const Header = () => {
             </nav>
             <div className="nav-buttons">
               <button className="logout-btn button"
-              onClick={handleLogout}>
+                      onClick={handleLogout}>
                 <span>Выход</span>
               </button>
+              <img alt="user" src="https://img.icons8.com/?size=100&id=7820&format=png&color=000000" className="user-icon" onClick={() => navigate("/myProfile")}/>
             </div>
           </div>
 
@@ -95,7 +96,7 @@ const Header = () => {
               </nav>
               <div className="mobile-buttons">
                 <button className="mobile-logout button"
-                onClick={handleLogout}>
+                        onClick={handleLogout}>
                   <span>Выход</span>
                 </button>
               </div>

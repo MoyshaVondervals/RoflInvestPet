@@ -1,8 +1,11 @@
 BACK:
-   added stocks(create and delete stock)
-    bug fix
-Front:
-    added admin page for stocks
+   fixed directories mistakes
+   changed user, brokerage account, stock models
+   added availability to change name, bio, avatar picture
+   fixed security
+   Front:
+   added user profile page
+   moved become admin button
 
 
 

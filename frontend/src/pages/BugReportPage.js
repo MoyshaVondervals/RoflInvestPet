@@ -1,6 +1,5 @@
 
 import "../styles/aboutPage.css"
-import Header from "../components/headers/Header";
 import React, {useState} from "react";
 import axios from "axios";
 import {useSelector} from "react-redux";
@@ -75,10 +74,7 @@ const BugReportPage = () => {
                             onClick={handleSubmit}>
                         Отправить
                     </button>
-                    <button type="button" className="dont-have-account button"
-                            onClick={() => navigate('/becomeAdminPage')}>
-                        Стать админом
-                    </button>
+
                     <div className="message">{message}</div>
                     <a href="https://github.com/MoyshaVondervals">
                         <svg height="32" viewBox="0 0 16 16" width="32" className = "socialIcons" >

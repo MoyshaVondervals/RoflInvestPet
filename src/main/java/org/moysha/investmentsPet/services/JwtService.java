@@ -32,6 +32,10 @@ public class JwtService {
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
+    public Long extractUserId(String token) {
+        String sub = extractClaim(token, Claims::getSubject);
+        return (sub != null && !sub.isBlank()) ? Long.valueOf(sub) : null;
+    }
 
     /**
      * Генерация токена
@@ -57,8 +61,7 @@ public class JwtService {
      * @return true, если токен валиден
      */
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String userName = extractUserName(token);
-        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        return !isTokenExpired(token);
     }
 
     /**
@@ -82,11 +85,18 @@ public class JwtService {
      * @return токен
      */
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        String subjectAsUserId;
+        if (userDetails instanceof org.moysha.investmentsPet.models.User u) {
+            subjectAsUserId = String.valueOf(u.getId());
+        } else {
+            subjectAsUserId = userDetails.getUsername();
+        }
+
         return Jwts.builder()
                 .claims(extraClaims)
-                .subject(userDetails.getUsername())
+                .subject(subjectAsUserId)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10 ))
                 .signWith(getSigningKey())
                 .compact();
     }
@@ -133,5 +143,10 @@ public class JwtService {
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public Long extractIdFromClaim(String token) {
+        Number n = extractClaim(token, claims -> claims.get("id", Number.class));
+        return n != null ? n.longValue() : null;
     }
 }

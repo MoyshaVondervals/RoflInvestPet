@@ -1,11 +1,10 @@
-import React, {Fragment, useState} from 'react'
+import React, {useState} from 'react'
 
-import PropTypes from 'prop-types'
 
 import '../../styles/login-page.css'
 
 import axios from "axios";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 
 const AddNewStock = () => {

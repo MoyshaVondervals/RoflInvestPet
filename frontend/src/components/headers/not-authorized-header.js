@@ -1,36 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../../styles/header.css';
-import logo from "../../styles/resources/roflInves.jpg"
-import {useNavigate} from "react-router-dom";
+import logo from "../../styles/resources//roflInves-removebg-preview.png";
+import { useNavigate } from "react-router-dom";
 
 const NotAuthorizedHeader = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Блокировка скролла body при открытом меню
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'auto';
+    return () => { document.body.style.overflow = 'auto'; };
   }, [isMobileMenuOpen]);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
-  };
+  // ✅ CHANGED: useCallback + функциональный сеттер
+  const toggleMobileMenu = useCallback(() => {
+    setMobileMenuOpen((prev) => !prev);
+  }, []);
 
-  const mobileNavigate = (route) =>{
-    navigate(route)
-    toggleMobileMenu()
-  }
-
-  const closeMobileMenu = () => {
+  // ✅ CHANGED: безопасная навигация + закрытие меню
+  const mobileNavigate = useCallback((route) => {
+    navigate(route);
     setMobileMenuOpen(false);
-  };
+  }, [navigate]);
 
   return (
       <header className="header">
@@ -40,40 +32,31 @@ const NotAuthorizedHeader = () => {
               src={logo}
               onClick={() => navigate('/')}
               className="logo"
-
           />
 
           {/* Десктопное меню */}
           <div className="desktop-menu">
             <nav className="nav-links">
-              <a className="nav-link" onClick={() => navigate("/about")}>О проекте</a>
-              <a  className="nav-link" onClick={() => navigate("/aboutDevelopment")}>О разработке</a>
-              <a  className="nav-link" onClick={() => navigate('/auth/sign-in')}>Сообщить о проблеме</a>
+              <span className="nav-link" onClick={() => navigate("/about")}>О проекте</span> {/* ✅ CHANGED: span+onClick */}
+              <span className="nav-link" onClick={() => navigate("/aboutDevelopment")}>О разработке</span>
+              <span className="nav-link" onClick={() => navigate('/auth/sign-in')}>Сообщить о проблеме</span>
             </nav>
             <div className="auth-buttons">
-              <button className="login-btn button">
-                <span onClick={() => navigate('/auth/sign-in')}>Вход</span>
+              <button className="login-btn button" onClick={() => navigate('/auth/sign-in')}> {/* ✅ CHANGED: onClick на кнопке */}
+                <span>Вход</span>
               </button>
-              <button className="register-btn button">
-                <span onClick={() => navigate('/auth/sign-up')}>Регистрация</span>
+              <button className="register-btn button" onClick={() => navigate('/auth/sign-up')}>
+                <span>Регистрация</span>
               </button>
             </div>
           </div>
 
-          {/* Бургер-меню */}
+          {/* Бургер-меню (кнопка) */}
           <div className="burger-menu" onClick={toggleMobileMenu}>
-            <svg viewBox="0 0 1024 1024" className="burger-icon">
-              <path d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"></path>
+            <svg viewBox="0 0 1024 1024" className="burger-icon" aria-hidden="true">
+              <path d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s-19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s-19.115 42.667 42.667 42.667z"></path>
             </svg>
-            <button className="login-btn button" id = "logBut">
-              <span onClick={() => navigate('/auth/sign-in')}>Вход</span>
-            </button>
-            <button className="register-btn button" >
-              <span onClick={() => navigate('/auth/sign-up')} >Регистрация</span>
-            </button>
           </div>
-
-
 
           {/* Мобильное меню */}
           <div className={`mobile-menu ${isMobileMenuOpen ? 'show' : ''}`}>
@@ -83,18 +66,20 @@ const NotAuthorizedHeader = () => {
                     alt="Логотип"
                     src={logo}
                     className="mobile-logo"
-                    onClick={() => navigate('/')}
+                    onClick={() => mobileNavigate('/')}
                 />
-                <div className="close-menu" onClick={toggleMobileMenu}>
-                  <svg viewBox="0 0 1024 1024" className="close-icon">
+                <div className="close-menu" onClick={toggleMobileMenu} aria-label="Закрыть меню">
+                  <svg viewBox="0 0 1024 1024" className="close-icon" aria-hidden="true">
                     <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>
                   </svg>
                 </div>
               </div>
+
               <nav className="mobile-links">
-                <a  className="mobile-link" onClick={()=>mobileNavigate("/about")}>О проекте</a>
-                <a  className="mobile-link" onClick={()=>mobileNavigate("/aboutDevelopment")}>Разработчик</a>
+                <span className="mobile-link" onClick={() => mobileNavigate("/about")}>О проекте</span> {/* ✅ CHANGED */}
+                <span className="mobile-link" onClick={() => mobileNavigate("/aboutDevelopment")}>Разработчик</span> {/* ✅ CHANGED */}
               </nav>
+
               <div className="mobile-auth-buttons">
                 <button className="mobile-login button" onClick={() => mobileNavigate('/auth/sign-in')}>
                   <span>Вход</span>

@@ -28,9 +28,6 @@ public class BrokerageAccount {
     @Column(name = "balance", nullable = false, precision = 15, scale = 2)
     private BigDecimal balance;
 
-//    @Column(name = "currency", nullable = false, length = 10)
-//    private String currency;
-
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

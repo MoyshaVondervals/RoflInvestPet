@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface BrokerageAccountRepository extends JpaRepository<BrokerageAccount, Long> {
     Optional<BrokerageAccountRepository> findByUser(User user);
     boolean existsByUser(User user);
+    int deleteBrokerageAccountByUser(User user);
 
 }

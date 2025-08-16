@@ -37,7 +37,7 @@ public class Stock {
     private InvestmentStatus availableFor;
 
     @Lob
-    @JdbcTypeCode(SqlTypes.BINARY)  // New annotation in Hibernate 6+
+    @JdbcTypeCode(SqlTypes.BINARY)
     @Column(name = "logo", columnDefinition = "bytea")
     private byte[] logo;
 }

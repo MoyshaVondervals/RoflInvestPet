@@ -1,5 +1,6 @@
 package org.moysha.investmentsPet.services;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.moysha.investmentsPet.models.BrokerageAccount;
 import org.moysha.investmentsPet.models.User;
@@ -21,6 +22,10 @@ public class BrokerageAccountService {
                 .createdAt(LocalDateTime.now())
                 .build();
         return brokerageAccountRepository.save(brokerageAccount);
+    }
+    @Transactional
+    public void deleteBrockerageAccount(User user) {
+        brokerageAccountRepository.deleteBrokerageAccountByUser(user);
     }
 
 

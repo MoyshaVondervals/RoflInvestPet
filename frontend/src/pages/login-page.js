@@ -1,13 +1,10 @@
-import React, {Fragment, useState} from 'react'
-import PropTypes from 'prop-types'
+import React, { useState} from 'react'
 import '../styles/login-page.css'
-import NotAuthorizedHeader from "../components/headers/not-authorized-header";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setAuthData} from "../redux/authSlice";
 import axios from 'axios';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Button, Input, Space } from 'antd';
+
 
 
 const LoginPage = () => {

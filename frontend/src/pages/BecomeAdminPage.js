@@ -1,14 +1,11 @@
-import React, {Fragment, useState} from 'react'
+import React, {useState} from 'react'
 
-import PropTypes from 'prop-types'
 
 import '../styles/login-page.css'
-import NotAuthorizedHeader from "../components/headers/not-authorized-header";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {setAuthData, updateRole} from "../redux/authSlice";
-import Header from "../components/headers/Header";
 
 const BecomeAdminPage = () => {
     const [message, setMessage] = useState('')

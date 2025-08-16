@@ -18,6 +18,8 @@ import AdmStocks from "./pages/adminPages/AdmStocks";
 import AddNewStock from "./pages/adminPages/AddNewStockPage";
 import DeleteStock from "./pages/adminPages/DeleteStock";
 
+import MyProfilePage from "./pages/MyProfilePage";
+
 
 function App() {
 
@@ -39,6 +41,7 @@ function App() {
                         <Route path="/admStocks" element={<PrivateRoute element={<AdmStocks />} requiredRole="ROLE_ADMIN" />} />
                         <Route path="/newStock" element={<PrivateRoute element={<AddNewStock />} requiredRole="ROLE_ADMIN" />} />
                         <Route path="/deleteStock" element={<PrivateRoute element={<DeleteStock />} requiredRole="ROLE_ADMIN" />} />
+                        <Route path="/myProfile" element={<PrivateRoute element={<MyProfilePage />} />} />
                     </Routes>
                 </BrowserRouter>
             </div>

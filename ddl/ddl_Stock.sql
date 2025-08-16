@@ -16,6 +16,3 @@ ALTER TABLE stock
 
 ALTER TABLE stock
     ADD CONSTRAINT uc_stock_ticker UNIQUE (ticker);
-
-
-ALTER TABLE stock ALTER COLUMN logo TYPE bytea USING logo::bytea;

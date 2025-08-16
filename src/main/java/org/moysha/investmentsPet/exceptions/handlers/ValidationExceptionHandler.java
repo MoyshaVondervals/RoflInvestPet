@@ -1,4 +1,4 @@
-package org.moysha.investmentsPet.exceptions;
+package org.moysha.investmentsPet.exceptions.handlers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

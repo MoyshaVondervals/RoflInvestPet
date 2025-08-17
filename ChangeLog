@@ -1,12 +1,7 @@
 BACK:
-   fixed directories mistakes
-   changed user, brokerage account, stock models
-   added availability to change name, bio, avatar picture
-   fixed security
-   Front:
-   added user profile page
-   moved become admin button
-
+   some shit
+Front:
+   added request controller
 
 
 

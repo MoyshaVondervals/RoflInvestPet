@@ -7,8 +7,10 @@ import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {setAuthData} from "../redux/authSlice";
+import useApiClient from "../utils/requestController";
 
 const RegisterPage = () => {
+  const api = useApiClient();
   const [message, setMessage] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -23,11 +25,12 @@ const RegisterPage = () => {
       if (!username || !email || !password){
         setMessage("Заполните все поля")
       }
-      const response = await axios.post('http://localhost:8080/auth/sign-up',{
+
+      const response = await api.post('/auth/sign-up', {
         username,
         email,
         password
-      })
+      });
       dispatch(setAuthData({
         token: response.data.token,
         username: response.data.username,

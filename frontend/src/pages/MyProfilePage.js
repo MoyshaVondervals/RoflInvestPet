@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {clearAuthData} from "../redux/authSlice";
+import useApiClient from "../utils/requestController";
 
 const AVATAR_PLACEHOLDER_DATAURL =
     "data:image/svg+xml;utf8," +
@@ -22,6 +23,7 @@ const AVATAR_PLACEHOLDER_DATAURL =
 `);
 
 const MyProfilePage = () => {
+    const api = useApiClient();
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [deleting, setDeleting] = useState(false);
@@ -54,13 +56,13 @@ const MyProfilePage = () => {
             setLoading(true);
             setError("");
             try {
-                const response = await axios.get('http://localhost:8080/getMyProfile', {
+                const response = await api.get('/getMyProfile', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 console.log(response.data);
 
-                const base64 = response.data.userAvatar; // <-- поле с бэка
-                const avatar = pickAvatarDataUrl(base64, "image/jpeg"); // если знаешь тип — подставь
+                const base64 = response.data.userAvatar;
+                const avatar = pickAvatarDataUrl(base64, "image/jpeg");
 
                 setProfile({
                     name: response.data.username,
@@ -155,7 +157,7 @@ const MyProfilePage = () => {
 
             formData.append("logo", avatarFileRef.current || null);
 
-            const response = await axios.post("http://localhost:8080/changeProfile", formData, {
+            const response = await api.post("/changeProfile", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"

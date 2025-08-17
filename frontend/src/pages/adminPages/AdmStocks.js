@@ -3,8 +3,10 @@ import { Table } from 'antd';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import {useNavigate} from "react-router-dom";
+import useApiClient from "../../utils/requestController";
 
 const AdmStocks = () => {
+    const api = useApiClient();
     const token = useSelector((state) => state.auth.token);
     const [stocks, setStocks] = useState([]);
     const navigate = useNavigate();
@@ -12,11 +14,12 @@ const AdmStocks = () => {
     useEffect(() => {
         const fetchStocks = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/stocks/getStocksList', {
+                const response = await api.get('/stocks/getStocksList', {
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
                     }
                 });
+
 
                 // Преобразуем данные для таблицы
                 const formattedStocks = response.data.map((stock, index) => ({

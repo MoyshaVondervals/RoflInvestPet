@@ -30,6 +30,7 @@ public class StocksController {
             @RequestPart("payload") @Valid NewStockReq newStockReq,
             @RequestPart("logo") @Valid MultipartFile logoFile
     ) throws IOException {
+        System.err.println("#####   NEW STOCK  #####");
         stockService.createNewStock(newStockReq, logoFile);
         return ResponseEntity.ok().build();
     }

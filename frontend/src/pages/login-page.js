@@ -4,10 +4,12 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setAuthData} from "../redux/authSlice";
 import axios from 'axios';
+import useApiClient from "../utils/requestController";
 
 
 
 const LoginPage = () => {
+  const api = useApiClient();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,7 +23,7 @@ const LoginPage = () => {
         return; // важно
       }
 
-      const response = await axios.post('http://localhost:8080/auth/sign-in', {
+      const response = await api.post('/auth/sign-in', {
         username,
         password
       });

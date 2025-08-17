@@ -7,18 +7,15 @@ const NotAuthorizedHeader = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Блокировка скролла body при открытом меню
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'auto';
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMobileMenuOpen]);
 
-  // ✅ CHANGED: useCallback + функциональный сеттер
   const toggleMobileMenu = useCallback(() => {
     setMobileMenuOpen((prev) => !prev);
   }, []);
 
-  // ✅ CHANGED: безопасная навигация + закрытие меню
   const mobileNavigate = useCallback((route) => {
     navigate(route);
     setMobileMenuOpen(false);
@@ -37,12 +34,12 @@ const NotAuthorizedHeader = () => {
           {/* Десктопное меню */}
           <div className="desktop-menu">
             <nav className="nav-links">
-              <span className="nav-link" onClick={() => navigate("/about")}>О проекте</span> {/* ✅ CHANGED: span+onClick */}
+              <span className="nav-link" onClick={() => navigate("/about")}>О проекте</span>
               <span className="nav-link" onClick={() => navigate("/aboutDevelopment")}>О разработке</span>
               <span className="nav-link" onClick={() => navigate('/auth/sign-in')}>Сообщить о проблеме</span>
             </nav>
             <div className="auth-buttons">
-              <button className="login-btn button" onClick={() => navigate('/auth/sign-in')}> {/* ✅ CHANGED: onClick на кнопке */}
+              <button className="login-btn button" onClick={() => navigate('/auth/sign-in')}>
                 <span>Вход</span>
               </button>
               <button className="register-btn button" onClick={() => navigate('/auth/sign-up')}>
@@ -51,14 +48,12 @@ const NotAuthorizedHeader = () => {
             </div>
           </div>
 
-          {/* Бургер-меню (кнопка) */}
           <div className="burger-menu" onClick={toggleMobileMenu}>
             <svg viewBox="0 0 1024 1024" className="burger-icon" aria-hidden="true">
               <path d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s-19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s-19.115 42.667 42.667 42.667z"></path>
             </svg>
           </div>
 
-          {/* Мобильное меню */}
           <div className={`mobile-menu ${isMobileMenuOpen ? 'show' : ''}`}>
             <div className="mobile-nav">
               <div className="mobile-top">

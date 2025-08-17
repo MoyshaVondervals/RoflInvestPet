@@ -5,9 +5,11 @@ import '../../styles/login-page.css'
 
 import axios from "axios";
 import {useSelector} from "react-redux";
+import useApiClient from "../../utils/requestController";
 
 
 const AddNewStock = () => {
+    const api = useApiClient();
     const [message, setMessage] = useState('')
     const [logo, setLogo] = useState('')
     const [ticker, setTicker] = useState('')
@@ -31,9 +33,8 @@ const AddNewStock = () => {
 
 
             const formData = new FormData();
-
             const payload = {
-                ticker: ticker.toUpperCase(), // Ensure uppercase
+                ticker: ticker.toUpperCase(),
                 name,
                 sector,
                 lastPrice: parseFloat(lastPrice),
@@ -46,7 +47,7 @@ const AddNewStock = () => {
 
             formData.append("logo", logo);
 
-            const response = await axios.post("http://localhost:8080/stocks/newStock", formData, {
+            const response = await api.post('/stocks/newStock', formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
@@ -54,7 +55,6 @@ const AddNewStock = () => {
             });
 
             setMessage("Акция успешно добавлена");
-            // Reset form
             setTicker('');
             setName('');
             setSector('');

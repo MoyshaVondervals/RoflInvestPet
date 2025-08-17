@@ -6,8 +6,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {setAuthData, updateRole} from "../redux/authSlice";
+import useApiClient from "../utils/requestController";
 
 const BecomeAdminPage = () => {
+    const api = useApiClient();
     const [message, setMessage] = useState('')
     const [admPasswd, setPassword] = useState('')
     const dispatch = useDispatch();
@@ -20,7 +22,7 @@ const BecomeAdminPage = () => {
     const handleSubmit = async () => {
         try{
 
-            const response = await axios.post('http://localhost:8080/getAdmin',{
+            const response = await api.post('/getAdmin',{
                 admPasswd
             }
             ,{

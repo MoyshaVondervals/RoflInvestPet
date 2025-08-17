@@ -3,11 +3,12 @@ import '../../styles/login-page.css'
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
+import useApiClient from "../../utils/requestController";
 
 
 
 const DeleteStock = () => {
-
+    const api = useApiClient();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const DeleteStock = () => {
     const handleSubmit = async () => {
         try{
 
-            const response = await axios.post('http://localhost:8080/stocks/deleteStock',{
+            const response = await api.post('/stocks/deleteStock',{
                     ticker: ticker.toUpperCase()
                 }
                 ,{

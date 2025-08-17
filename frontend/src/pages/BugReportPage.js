@@ -4,7 +4,9 @@ import React, {useState} from "react";
 import axios from "axios";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import useApiClient from "../utils/requestController";
 const BugReportPage = () => {
+    const api = useApiClient();
     const navigate = useNavigate();
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
@@ -19,8 +21,8 @@ const BugReportPage = () => {
         try {
 
 
-            const response = await axios.post(
-                'http://localhost:8080/bugReport',
+            const response = await api.post(
+                '/bugReport',
                 {
                     username: username,
                     title: title,

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 
 import '../../styles/login-page.css'
-
+import imageCompression from "browser-image-compression";
 import axios from "axios";
 import {useSelector} from "react-redux";
 import useApiClient from "../../utils/requestController";
@@ -30,6 +30,13 @@ const AddNewStock = () => {
                 setMessage("Заполните все поля");
                 return;
             }
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 256,
+                useWebWorker: true,
+            };
+            const compressedFile = await imageCompression(logo, options);
+
 
 
             const formData = new FormData();
@@ -45,7 +52,8 @@ const AddNewStock = () => {
                 type: "application/json"
             }));
 
-            formData.append("logo", logo);
+
+            formData.append("logo", compressedFile);
 
             const response = await api.post('/stocks/newStock', formData, {
                 headers: {
@@ -112,16 +120,21 @@ const AddNewStock = () => {
                         <select className="authority-page-select" onChange={(e) => setSector(e.target.value)}>
                             <option disabled selected value="">Выберите сектор</option>
                             <option value="ENERGY">Энергетика</option>
-                            <option value="MATERIALS">Материалы</option>
-                            <option value="INDUSTRIALS">Промышленность</option>
-                            <option value="GOVERNMENT">Государственный сектор</option>
                             <option value="HEALTHCARE">Здравоохранение</option>
-                            <option value="RETAIL">Розничная торговля</option>
-                            <option value="TECHNOLOGY">Технологии</option>
-                            <option value="UTILITIES">Коммунальные услуги</option>
-                            <option value="OTHER">Другое</option>
-
+                            <option value="AGRICULTURE">Сельское хозяйство и пищевая промышленность</option>
+                            <option value="LOGISTICS">Логистика и транспорт</option>
+                            <option value="MANUFACTURING">Промышленное производство</option>
+                            <option value="METALLURGY">Металлургия</option>
+                            <option value="RESOURCE_EXTRACTION">Добыча ресурсов</option>
+                            <option value="CONSTRUCTION">Строительство и недвижимость</option>
+                            <option value="FINANCIAL">Финансовый сектор</option>
+                            <option value="SOFTWARE">Программное обеспечение (ПО)</option>
+                            <option value="NETWORK_TECHNOLOGIES">Сетевые технологии и телеком</option>
+                            <option value="RETAIL">Розничная торговля (Ритейл)</option>
+                            <option value="SCIENCE_EDUCATION">Наука и образование</option>
+                            <option value="ENTERTAINMENT_MEDIA">Развлечения и медиа</option>
                         </select>
+
 
                         <input
                             type="text"

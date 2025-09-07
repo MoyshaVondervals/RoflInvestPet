@@ -26,7 +26,7 @@ public class AuthController {
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up")
     public ResponseEntity<AuthRespForm> signUp(@RequestBody @Valid SignUpRequest request) {
-        return authenticationService.sugnUp(request);
+        return authenticationService.signUp(request);
     }
 
 

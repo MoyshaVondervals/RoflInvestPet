@@ -1,10 +1,10 @@
 import React, { useState} from 'react'
-import '../styles/login-page.css'
+import '../../styles/login-page.css'
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {setAuthData} from "../redux/authSlice";
+import {setAuthData} from "../../redux/authSlice";
 import axios from 'axios';
-import useApiClient from "../utils/requestController";
+import useApiClient from "../../utils/requestController";
 
 
 

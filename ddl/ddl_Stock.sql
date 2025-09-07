@@ -5,7 +5,6 @@ CREATE TABLE stock
     ticker        VARCHAR(255)                            NOT NULL,
     name          VARCHAR(255)                            NOT NULL,
     sector        SMALLINT                                NOT NULL,
-    last_price    DOUBLE PRECISION                        NOT NULL,
     available_for SMALLINT                                NOT NULL,
     logo          BYTEA,
     CONSTRAINT pk_stock PRIMARY KEY (id)

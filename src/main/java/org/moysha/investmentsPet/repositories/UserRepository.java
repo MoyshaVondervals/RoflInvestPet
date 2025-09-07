@@ -2,6 +2,8 @@ package org.moysha.investmentsPet.repositories;
 
 import jakarta.transaction.Transactional;
 import org.moysha.investmentsPet.enums.Role;
+import org.moysha.investmentsPet.models.BrokerageAccount;
+import org.moysha.investmentsPet.models.Stock;
 import org.moysha.investmentsPet.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,6 +37,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     );
 
     int deleteUserById(Long id);
+
+
 
 
 }

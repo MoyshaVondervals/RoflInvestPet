@@ -4,10 +4,12 @@ package org.moysha.investmentsPet.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 import org.moysha.investmentsPet.enums.EconomicalSector;
 import org.moysha.investmentsPet.enums.InvestmentStatus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -30,8 +32,9 @@ public class Stock {
     @Column(name = "sector", nullable = false)
     private EconomicalSector sector;
 
-    @Column(name = "last_price", nullable = false)
-    private double lastPrice;
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<StockPrice> prices = new ArrayList<>();
 
     @Column(name = "available_for", nullable = false)
     private InvestmentStatus availableFor;
@@ -40,4 +43,10 @@ public class Stock {
     @JdbcTypeCode(SqlTypes.BINARY)
     @Column(name = "logo", columnDefinition = "bytea")
     private byte[] logo;
+
+
+    public void addPrice(StockPrice price) {
+        prices.add(price);
+        price.setStock(this);
+    }
 }

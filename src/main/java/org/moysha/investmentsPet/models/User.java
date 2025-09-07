@@ -6,6 +6,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import org.moysha.investmentsPet.enums.InvestmentStatus;
 import org.moysha.investmentsPet.enums.Role;
+import org.moysha.investmentsPet.services.BrokerageAccountService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
@@ -55,6 +57,14 @@ public class User implements UserDetails {
     @JdbcTypeCode(SqlTypes.BINARY)
     @Column(name = "user_avatar", columnDefinition = "bytea")
     private byte[] userAvatar;
+
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private BrokerageAccount brokerageAccount;
+
+
+
 
 
     @Override

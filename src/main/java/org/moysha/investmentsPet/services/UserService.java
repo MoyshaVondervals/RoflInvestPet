@@ -6,6 +6,7 @@ import org.moysha.investmentsPet.dto.ChangeProfileReq;
 import org.moysha.investmentsPet.dto.ProfileResp;
 import org.moysha.investmentsPet.enums.Role;
 import org.moysha.investmentsPet.exceptions.MessageException;
+import org.moysha.investmentsPet.models.BrokerageAccount;
 import org.moysha.investmentsPet.models.User;
 import org.moysha.investmentsPet.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
@@ -27,14 +30,22 @@ public class UserService {
         return repository.save(user);
     }
 
-    @Transactional
     public User create(User user) {
         if (repository.existsByUsername(user.getUsername())) {
             throw new MessageException("Пользователь с таким никнеймом уже существует");
         } else if (repository.existsByEmail(user.getEmail())) {
             throw new MessageException("Почта занята");
         }
-        return save(user);
+
+        BrokerageAccount account = BrokerageAccount.builder()
+                .user(user)
+                .balance(BigDecimal.valueOf(1000))
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        user.setBrokerageAccount(account);
+
+        return repository.save(user);
     }
 
     public User getByUsername(String username) {

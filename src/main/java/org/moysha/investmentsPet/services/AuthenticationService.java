@@ -30,16 +30,18 @@ public class AuthenticationService {
     private final BrokerageAccountService brokerageAccountService;
 
     @Transactional
-    public ResponseEntity<AuthRespForm> sugnUp(SignUpRequest request) {
+    public ResponseEntity<AuthRespForm> signUp(SignUpRequest request) {
         var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .investorStatus(InvestmentStatus.BASIC)
                 .createdAt(LocalDateTime.now())
-                .role(Role.ROLE_USER).build();
+                .role(Role.ROLE_USER)
+                .build();
+
         userService.create(user);
-        brokerageAccountService.createBrokerageAccount(user);
+
         var jwt = jwtService.generateToken(user);
         return new ResponseEntity<>(new AuthRespForm(jwt, request.getUsername(), Role.ROLE_USER), HttpStatus.OK);
     }

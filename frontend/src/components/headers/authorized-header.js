@@ -37,9 +37,9 @@ const Header = () => {
           {/* Десктопное меню */}
           <div className="desktop-menu">
             <nav className="nav-links">
-              <span className="nav-link">Главная</span>
-              <span className="nav-link">Рынок</span>
-              <span className="nav-link">Новости</span>
+              <span className="nav-link" onClick={()=>navigate("/stockPage")}>Главная</span>
+              <span className="nav-link" onClick={()=>navigate("/market")}>Рынок</span>
+              <span className="nav-link" onClick={()=>navigate("/news")}>Новости</span>
               <span className="nav-link" onClick={()=>navigate("/about")}>О проекте</span>
               <span className="nav-link" onClick={()=>navigate("/bugReportPage")}>Сообщить о проблеме</span>
 
@@ -83,8 +83,8 @@ const Header = () => {
               </div>
               <nav className="mobile-links">
                 <span className="mobile-link">Главная</span>
-                <span className="mobile-link">Рынок</span>
-                <span className="mobile-link">Новости</span>
+                <span className="mobile-link" onClick={() => mobileNavigate("/market")}>Рынок</span>
+                <span className="mobile-link" onClick={() => mobileNavigate("/news")}>Новости</span>
                 <span className="mobile-link" onClick={() => mobileNavigate("/about")}>О проекте</span>
                 <span className="mobile-link" onClick={() => mobileNavigate("/bugReportPage")}>Сообщить о проблеме</span>
 
@@ -93,12 +93,24 @@ const Header = () => {
       Управление
     </span>
                 )}
+                <div className="mobile-user-center">
+                  <img
+                      alt="user"
+                      src="https://img.icons8.com/?size=100&id=7820&format=png&color=000000"
+                      className="user-icon"
+                      onClick={() => mobileNavigate("/myProfile")}
+                  />
+                </div>
+
               </nav>
+
               <div className="mobile-buttons">
+
                 <button className="mobile-logout button"
                         onClick={handleLogout}>
                   <span>Выход</span>
                 </button>
+
               </div>
 
             </div>

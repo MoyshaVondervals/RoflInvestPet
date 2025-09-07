@@ -6,7 +6,7 @@ import lombok.Data;
 import org.moysha.investmentsPet.validators.TickerValidation;
 
 @Data
-public class DeleteStock {
+public class StockTickerReq {
     @Schema(description = "Тикер", example = "PLZL")
     @NotBlank(message = "Тикер не может быть пустым")
     @TickerValidation(message = "Не валидное имя тикера")

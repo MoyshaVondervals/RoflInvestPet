@@ -1,82 +1,55 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'antd';
-import axios from 'axios';
+import { Table, Tag } from 'antd';
 import { useSelector } from 'react-redux';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useApiClient from "../../utils/requestController";
+import { sectorEnum, availableForEnum } from '../../utils/enums';
+import StocksTable from "../../components/StocksTable";
 
 const AdmStocks = () => {
     const api = useApiClient();
     const token = useSelector((state) => state.auth.token);
     const [stocks, setStocks] = useState([]);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+
 
     useEffect(() => {
         const fetchStocks = async () => {
             try {
+                setLoading(true);
                 const response = await api.get('/stocks/getStocksList', {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                    }
+                    },
                 });
 
-
-                // Преобразуем данные для таблицы
                 const formattedStocks = response.data.map((stock, index) => ({
                     key: index + 1,
                     ticker: stock.ticker,
                     name: stock.name,
-                    sector: stock.sector,
+                    sector: sectorEnum[stock.sector] || stock.sector,
                     lastPrice: stock.lastPrice,
-                    status: stock.status,
+                    status: availableForEnum[stock.status] || stock.status,
                     logo: stock.logoBase64
                         ? <img src={`data:image/png;base64,${stock.logoBase64}`} alt="Logo" style={{ width: '50px' }} className="stock-logo" />
-                        : 'No logo'
+                        : 'No logo',
                 }));
 
                 setStocks(formattedStocks);
             } catch (error) {
                 console.error('Error fetching stocks:', error);
             } finally {
+                setLoading(false);
             }
         };
 
         fetchStocks();
     }, [token]);
 
-    const columns = [
-        {
-            title: 'Логотип',
-            dataIndex: 'logo',
-            key: 'logo',
-        },
-        {
-            title: 'Тикер',
-            dataIndex: 'ticker',
-            key: 'ticker',
-        },
-        {
-            title: 'Название',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Сектор',
-            dataIndex: 'sector',
-            key: 'sector',
-        },
-        {
-            title: 'Цена',
-            dataIndex: 'lastPrice',
-            key: 'lastPrice',
-            render: (price) => `$${price.toFixed(2)}`
-        },
-        {
-            title: 'Статус',
-            dataIndex: 'status',
-            key: 'status',
-        },
-    ];
+
+
 
     return (
         <div className="admin-dashboard">
@@ -93,9 +66,13 @@ const AdmStocks = () => {
                     </div>
                 </div>
 
-                <div className="table-panel">
-                    <Table dataSource={stocks} columns={columns} />
-                </div>
+                <StocksTable
+                    data={stocks}
+                    loading={loading}
+                    onRowClick={(record) => {
+                        console.log('Clicked ticker:', record.ticker);
+                    }}
+                />
             </div>
         </div>
     );

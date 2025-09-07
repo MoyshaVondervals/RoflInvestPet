@@ -8,6 +8,7 @@ import org.moysha.investmentsPet.dto.*;
 import org.moysha.investmentsPet.exceptions.MessageException;
 import org.moysha.investmentsPet.services.BugReportService;
 import org.moysha.investmentsPet.services.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,12 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Tag(name = "Запросы")
 public class RequestController {
+
+    @Value("${adminKey}")
+    private String adminKey;
+
+
+
     private final UserService service;
     private final BugReportService bugReportService;
     private final UserService userService;
@@ -36,7 +43,7 @@ public class RequestController {
     @PostMapping("/getAdmin")
     @Operation(summary = "becomeAdmin")
     public void exampleAdmin(@RequestBody BecomeAdminReq becomeAdminReq) {
-        if (Objects.equals(becomeAdminReq.getAdmPasswd(), "ADM_SECRET_KEY")) {
+        if (Objects.equals(becomeAdminReq.getAdmPasswd(),adminKey)) {
             userService.setRole();
 
         } else {

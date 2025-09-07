@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 
 
-import '../styles/login-page.css'
+import '../../styles/login-page.css'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {setAuthData, updateRole} from "../redux/authSlice";
-import useApiClient from "../utils/requestController";
+import {setAuthData, updateRole} from "../../redux/authSlice";
+import useApiClient from "../../utils/requestController";
 
 const BecomeAdminPage = () => {
     const api = useApiClient();

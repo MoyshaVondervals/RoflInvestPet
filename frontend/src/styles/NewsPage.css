@@ -1,0 +1,148 @@
+.news-page {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 24px;
+    font-family: Arial, sans-serif;
+}
+
+.news-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2a9d4a;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 60%;
+    margin: 0 auto;
+}
+
+.news-card-container {
+    background: #fff;
+    border-radius: 20px;
+    padding: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.news-card-container:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.news-card {
+    border-radius: 16px;
+    background: #fff;
+}
+
+.news-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.news-date {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+.news-card-text {
+    font-size: 14px;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    max-width: 70%;
+    width: 50%;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.modal-animate {
+    animation: scaleIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2a9d4a;
+    margin-bottom: 6px;
+}
+
+.modal-date {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 16px;
+}
+
+.modal-content {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 24px;
+}
+
+.modal-close {
+    background: #2a9d4a;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+
+.modal-close:hover {
+    background: #23853c;
+}
+
+@media (max-width: 768px) {
+    .modal {
+        background: #fff;
+        border-radius: 20px;
+        padding: 24px;
+        max-width: 90%;
+        width: 70%;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .news-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-width: 70%;
+        margin: 0 auto;
+    }
+}

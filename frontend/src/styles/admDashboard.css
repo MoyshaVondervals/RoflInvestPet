@@ -21,10 +21,9 @@
      box-sizing: border-box;
  }
 
-/* Горизонтальный — используется в AdmStocks (меню + таблица) */
 .admin-dashboard-container-row {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1300px;
     background-color: #fff;
     border-radius: var(--dl-layout-radius-radius4);
     padding: 2rem;
@@ -35,7 +34,6 @@
     box-sizing: border-box;
 }
 
-/* ===== ЛЕВАЯ КОЛОНКА ===== */
 .menu, .menu-panel {
     flex: 1;
     display: flex;

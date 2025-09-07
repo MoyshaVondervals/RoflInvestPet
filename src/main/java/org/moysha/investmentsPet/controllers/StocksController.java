@@ -4,11 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import org.moysha.investmentsPet.dto.DeleteStock;
+import org.moysha.investmentsPet.dto.StockPricesResp;
+import org.moysha.investmentsPet.dto.StockTickerReq;
 import org.moysha.investmentsPet.dto.NewStockReq;
+//import org.moysha.investmentsPet.dto.StockRes;
 import org.moysha.investmentsPet.dto.StockRes;
-import org.moysha.investmentsPet.models.Stock;
 import org.moysha.investmentsPet.services.StockService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,17 +37,29 @@ public class StocksController {
 
     @GetMapping("/getStocksList")
     @Operation(summary = "Получить список акций")
+
     public ResponseEntity<List<StockRes>> getStocksList() {
         System.err.println("#####   GET STOCKS LIST  #####");
-        List<Stock>  stocksList = stockService.getStocksList();
-        List<StockRes> stockResList = stocksList.stream().map(StockRes::new).toList();
-        return ResponseEntity.ok(stockResList);
+
+        return ResponseEntity.ok(stockService.getStocksList());
     }
 
     @PostMapping("/deleteStock")
     @Operation(summary = "Удалить акцию")
-    public ResponseEntity<Void> deleteStock(@RequestBody @Valid DeleteStock deleteStock) {
+    public ResponseEntity<Void> deleteStock(@RequestBody @Valid StockTickerReq deleteStock) {
         stockService.deleteStock(deleteStock);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/getStockPrices")
+    @Operation(summary = "Получить историю цен акций")
+    public ResponseEntity<StockPricesResp>  getStockPrices(@RequestBody @Valid StockTickerReq stockTickerReq) {
+        try{
+            return ResponseEntity.ok(stockService.getStockPrices(stockTickerReq));
+        }catch (Exception e){
+            System.err.println("#####   GET STOCK PRICES ERROR  #####");
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }

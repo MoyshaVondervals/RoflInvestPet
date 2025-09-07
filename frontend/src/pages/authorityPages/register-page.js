@@ -2,12 +2,12 @@ import React, {useState} from 'react'
 
 import PropTypes from 'prop-types'
 
-import '../styles/login-page.css'
+import '../../styles/login-page.css'
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {setAuthData} from "../redux/authSlice";
-import useApiClient from "../utils/requestController";
+import {setAuthData} from "../../redux/authSlice";
+import useApiClient from "../../utils/requestController";
 
 const RegisterPage = () => {
   const api = useApiClient();

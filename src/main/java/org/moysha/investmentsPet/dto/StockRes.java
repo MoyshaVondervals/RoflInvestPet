@@ -17,11 +17,11 @@ public class StockRes {
     private double lastPrice;
     private InvestmentStatus status;
     private String logoBase64;
-    public StockRes(Stock stock) {
+    public StockRes(Stock stock, double lastPrice) {
         this.ticker = stock.getTicker();
         this.name = stock.getName();
         this.sector = stock.getSector();
-        this.lastPrice = stock.getLastPrice();
+        this.lastPrice = lastPrice;
         this.status = stock.getAvailableFor();
         this.logoBase64 = Base64.getEncoder().encodeToString(stock.getLogo());
     }

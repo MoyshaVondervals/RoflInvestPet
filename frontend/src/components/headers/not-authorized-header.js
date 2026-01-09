@@ -31,7 +31,6 @@ const NotAuthorizedHeader = () => {
               className="logo"
           />
 
-          {/* Десктопное меню */}
           <div className="desktop-menu">
             <nav className="nav-links">
               <span className="nav-link" onClick={() => navigate("/about")}>О проекте</span>
@@ -71,8 +70,8 @@ const NotAuthorizedHeader = () => {
               </div>
 
               <nav className="mobile-links">
-                <span className="mobile-link" onClick={() => mobileNavigate("/about")}>О проекте</span> {/* ✅ CHANGED */}
-                <span className="mobile-link" onClick={() => mobileNavigate("/aboutDevelopment")}>Разработчик</span> {/* ✅ CHANGED */}
+                <span className="mobile-link" onClick={() => mobileNavigate("/about")}>О проекте</span>
+                <span className="mobile-link" onClick={() => mobileNavigate("/aboutDevelopment")}>Разработчик</span>
               </nav>
 
               <div className="mobile-auth-buttons">

@@ -61,12 +61,12 @@
 .about-page-text{
     .message {
         width: auto;
-        min-height: 28px; /* ✅ это вместо жёсткого height */
+        min-height: 28px;
         padding: 0.5rem 1rem;
         color: var(--dl-color-theme-secondary1);
         font-size: 16px;
         text-align: center;
-        word-wrap: break-word; /* ✅ длинный текст переносится */
+        word-wrap: break-word;
         word-break: break-word;
         line-height: 1.4;
         white-space: pre-line;

@@ -3,11 +3,17 @@ package org.moysha.investmentsPet.news;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.moysha.investmentsPet.dto.StockRes;
 import org.moysha.investmentsPet.enums.EconomicalSector;
+import org.moysha.investmentsPet.enums.GrowPattern;
+import org.moysha.investmentsPet.enums.GrowSpeed;
 import org.moysha.investmentsPet.models.Stock;
+import org.moysha.investmentsPet.models.StockImpact;
+import org.moysha.investmentsPet.services.NewsService;
+import org.moysha.investmentsPet.services.StockChangeTargetService;
 import org.moysha.investmentsPet.services.StockService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -30,6 +36,15 @@ public class AiNewsCreator {
     @Value("${apiKey}")
     private String apiKey;
 
+    private final StockChangeTargetService stockChangeTargetService;
+    private final NewsService newsService;
+
+
+    public static double parsePercent(String s) {
+        String cleaned = s.replace("%", "").trim();
+        return Double.parseDouble(cleaned);
+    }
+
 
     public String createRequest() {
         List<StockRes> stocksList = stockService.getStocksList();
@@ -38,11 +53,12 @@ public class AiNewsCreator {
             String stock = ("ticker: " + stockRes.getTicker() + ", sector: " + stockRes.getSector() + ", last price:" + stockRes.getLastPrice() + ", available for: " + stockRes.getStatus() + "\n");
             stocksForRequest.append(stock);
         }
-        System.err.println("stocksForRequest: " + stocksForRequest);
+
         return "Ты — финансовый аналитик и сценарист экономических событий. " +
                 "Вот компании с их секторами: " + stocksForRequest
                 + "Составь одно экономическое событие с заголовком и новостью, которое влияет на один или несколько секторов, добавляй в ответ только те акции на которые есть влияние. \n" +
-                "Для каждой компании указать, как её цена изменится в процентах, причём изменение зависит от типа доступности акции: BASIC, QUALIFIED, SUPER_QUALIFIED (например, для акций доступных BASIC меньше колебания, для SUPER_QUALIFIED — больше). \n" +
+                "Для каждой компании указать, как её цена изменится в процентах, причём изменение зависит от типа доступности акции: BASIC (+-2.0%), QUALIFIED(+-5.0%), SUPER_QUALIFIED(+-10%). Проценты могут быть десятичными, а также как положительными так и отрицательными. \n" +
+                "Также для каждой акции указывай характер роста SLOW, MEDIUM, FAST, SUPERFAST" +
                 "Сделай событие разнообразным и интересным, избегай повторов с типичными новостями, новости должны быть реалистичными."+
                 "Структура ответа JSON должна быть следующая: " +
                 "{" +
@@ -50,8 +66,11 @@ public class AiNewsCreator {
                 "    'event_news': 'текст новости'," +
                 "    'affected_sectors': ['список секторов']," +
                 "    'stock_impacts': {" +
-                "    ['имя акции']: '+-x%'," +
-                "    " +
+                "    {" +
+                "    stockTicker: 'имя акции'" +
+                "    impact: '+-x%'," +
+                "    speed: 'Скорость изменения'" +
+                "    }" +
                 "}";
     }
 
@@ -90,7 +109,11 @@ public class AiNewsCreator {
     }
 
 
-    public static void parseJson(String response) throws JsonProcessingException {
+    public void parseJson(String response) throws IOException, InterruptedException {
+        List<StockImpact> stockImpacts = new LinkedList<>();
+        ArrayList<EconomicalSector> affectedSectors = new ArrayList<>();
+        String eventTitle = "";
+        String eventNews = "";
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(response);
@@ -98,41 +121,54 @@ public class AiNewsCreator {
             JsonNode message = choices.get(0).get("message");
             JsonNode content = message.get("content");
             String strContent = content.asText();
-            System.err.println(strContent);
             String clear = strContent.replaceAll("```", "").replaceAll("json", "");
-            System.err.println(clear);
             JsonNode eventJson = mapper.readTree(clear);
 
 
-            String eventTitle = eventJson.get("event_title").asText();
-            String eventNews = eventJson.get("event_news").asText();
-            System.err.println("Заголовок: " + eventTitle);
-            System.err.println("Новость: " + eventNews);
+            eventTitle = eventJson.get("event_title").asText();
+            eventNews = eventJson.get("event_news").asText();
+            System.out.println("Заголовок: " + eventTitle);
+            System.out.println("Новость: " + eventNews);
 
-            List<String> affectedSectors = new ArrayList<>();
+
             for (JsonNode sector : eventJson.path("affected_sectors")) {
-                affectedSectors.add(sector.asText());
-                System.err.println(sector.asText());
+                affectedSectors.add(EconomicalSector.valueOf(sector.asText()));
+                System.out.println(sector.asText());
             }
 
 
-            Map<String, String> stockImpacts = new HashMap<>();
-            JsonNode stockImpactsJson = eventJson.get("stock_impacts");
-            Iterator<String> fieldNames = stockImpactsJson.fieldNames();
-            while (fieldNames.hasNext()) {
-                String company = fieldNames.next();
-                String change = stockImpactsJson.get(company).asText();
-                stockImpacts.put(company, String.valueOf(change));
-                System.err.println(company + " -> " + change);
+            for (JsonNode impacts: eventJson.path("stock_impacts")) {
+                System.out.println(impacts.get("stockTicker").asText());
+                StockImpact stockImpact = StockImpact.builder()
+                        .ticker(impacts.get("stockTicker").asText())
+                        .impact(parsePercent(impacts.get("impact").asText()))
+                        .growSpeed(GrowSpeed.valueOf(impacts.get("speed").asText())).build();
+                stockImpacts.add(stockImpact);
+
+
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("Parse ERROR");;
+            getAiNews();
+
+        }
+        newsService.createNews(eventTitle, eventNews);
+        destributeStockImpacts(stockImpacts);
+
+    }
+
+    @Transactional
+    public void destributeStockImpacts(List<StockImpact> stockImpacts){
+        for (StockImpact stockImpact : stockImpacts) {
+            stockChangeTargetService.alterTarget(stockImpact);
         }
     }
 
 
-    @Scheduled(cron = "0 0 17 * * *")
+    @Scheduled(cron = "0 0 */3 * * *")
     @Async
     public void getAiNews() throws IOException, InterruptedException {
         serverUnavailable = false;
@@ -140,17 +176,9 @@ public class AiNewsCreator {
         String prompt = createRequest();
         String aiResponse = sendRequest(prompt);
         parseJson(aiResponse);
-    }
+        System.out.println("Success");;
 
-    @Scheduled(cron = "@hourly")
-    @Async
-    public void scheduledTask2() throws IOException, InterruptedException {
-        System.err.println("scheduled task2");
-        if (serverUnavailable) {
-            getAiNews();
-        }
     }
-
 
 
 

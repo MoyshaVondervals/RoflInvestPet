@@ -1,4 +1,3 @@
-// src/components/StocksTable.jsx
 import React, { useMemo, useRef, useState } from 'react';
 import { Table, Tag, Input, Button, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';

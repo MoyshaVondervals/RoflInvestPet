@@ -1,4 +1,3 @@
-// SectorValidation.java
 package org.moysha.investmentsPet.validators;
 
 import jakarta.validation.Constraint;

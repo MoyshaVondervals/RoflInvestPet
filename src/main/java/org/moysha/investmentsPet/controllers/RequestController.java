@@ -6,7 +6,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.moysha.investmentsPet.dto.*;
 import org.moysha.investmentsPet.exceptions.MessageException;
+import org.moysha.investmentsPet.models.News;
 import org.moysha.investmentsPet.services.BugReportService;
+import org.moysha.investmentsPet.services.NewsService;
 import org.moysha.investmentsPet.services.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -31,6 +34,7 @@ public class RequestController {
     private final UserService service;
     private final BugReportService bugReportService;
     private final UserService userService;
+    private final NewsService newsService;
 
     @PostMapping("/bugReport")
     @Operation(summary = "Сообщить о проблеме")
@@ -75,6 +79,11 @@ public class RequestController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/news")
+    @Operation(summary = "Получить новости")
+    public ResponseEntity<List<News>> getNews() {
+        return ResponseEntity.ok(newsService.getNews());
+    }
 
 
 

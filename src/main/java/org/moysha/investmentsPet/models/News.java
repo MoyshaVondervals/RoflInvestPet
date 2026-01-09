@@ -2,6 +2,10 @@ package org.moysha.investmentsPet.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
+import org.moysha.investmentsPet.enums.EconomicalSector;
+
+import java.util.ArrayList;
 
 @Entity
 @Builder
@@ -20,4 +24,10 @@ public class News {
 
     @Column(name = "text")
     private String text;
+
+    @Column(name = "created_at", nullable = false)
+    private java.time.LocalDateTime createdAt;
+
+
+
 }

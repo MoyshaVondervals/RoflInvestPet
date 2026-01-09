@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.moysha.investmentsPet.dto.StockPricesResp;
 import org.moysha.investmentsPet.dto.StockTickerReq;
 import org.moysha.investmentsPet.dto.NewStockReq;
-//import org.moysha.investmentsPet.dto.StockRes;
 import org.moysha.investmentsPet.dto.StockRes;
 import org.moysha.investmentsPet.services.StockService;
 import org.springframework.http.MediaType;

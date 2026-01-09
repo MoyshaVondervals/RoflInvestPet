@@ -9,5 +9,4 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 @EnableScheduling
 public class SchedulingConfig {
-    //возможно настроить блокировку для нескольких экземпляров, то на будущее так что вот тут можно глянуть https://habr.com/ru/articles/580062/
 }

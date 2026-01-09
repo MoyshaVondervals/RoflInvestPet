@@ -40,10 +40,9 @@ const MyProfilePage = () => {
         avatarUrl: "",
     });
 
-    // Редактируемые поля
     const [editName, setEditName] = useState("");
     const [editBio, setEditBio] = useState("");
-    const [avatarPreview, setAvatarPreview] = useState(""); // локальный preview
+    const [avatarPreview, setAvatarPreview] = useState("");
     const avatarFileRef = useRef(null);
     const fileInputRef = useRef(null);
 
@@ -96,11 +95,9 @@ const MyProfilePage = () => {
         fileInputRef.current?.click();
     };
 
-    // Выбор файла аватара
     const onFileChange = (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        // простая валидация
         if (!file.type.startsWith("image/")) {
             alert("Выберите файл изображения (PNG/JPG/WebP).");
             e.target.value = "";
@@ -183,9 +180,7 @@ const MyProfilePage = () => {
                 await navigator.share({ title: "Мой профиль", text, url });
                 return;
             }
-        } catch {
-            /* игнор */
-        }
+        } catch {}
         try {
             await navigator.clipboard.writeText(url);
             alert("Ссылка на профиль скопирована в буфер обмена.");
@@ -232,7 +227,6 @@ const MyProfilePage = () => {
     return (
         <div className="profile-page">
             <div className="profile-page-container">
-                {/* Блок 1: Аватар */}
                 <div className="grid-box1">
                     <div
                         className={`avatar-wrapper ${isEditing ? "editable" : ""}`}
@@ -307,7 +301,6 @@ const MyProfilePage = () => {
                     )}
                 </div>
 
-                {/* Блок 3: кнопки редактирования и «Похвастаться» */}
                 <div className="grid-box3">
                     <div className="actions-left">
                         {!isEditing ? (

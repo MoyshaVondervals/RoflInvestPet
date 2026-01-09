@@ -117,7 +117,11 @@ const AddNewStock = () => {
                             className="authority-page-input input"
                             onChange={(e) => setName(e.target.value)}
                         />
-                        <select className="authority-page-select" onChange={(e) => setSector(e.target.value)}>
+                        <select
+                            className="authority-page-select"
+                            value={sector}
+                            onChange={(e) => setSector(e.target.value)}
+                        >
                             <option disabled selected value="">Выберите сектор</option>
                             <option value="ENERGY">Энергетика</option>
                             <option value="HEALTHCARE">Здравоохранение</option>
@@ -144,7 +148,7 @@ const AddNewStock = () => {
                             name="lastPrice"
                             value={lastPrice}
                             onChange={(e) => {
-                                const raw = e.target.value.replace(',', '.'); // заменяем запятую на точку
+                                const raw = e.target.value.replace(',', '.');
 
                                 const isValid = /^(\d+)?(\.\d{0,2})?$/.test(raw);
                                 if (isValid || raw === '') {
@@ -154,12 +158,15 @@ const AddNewStock = () => {
                         />
 
 
-                        <select className="authority-page-select" onChange={(e) => setAvailableFor(e.target.value)}>
-                            <option disabled selected value="">Доступно для</option>
+                        <select
+                            className="authority-page-select"
+                            value={availableFor}
+                            onChange={(e) => setAvailableFor(e.target.value)}
+                        >
+                            <option value="" disabled>Доступно для</option>
                             <option value="BASIC">Базовый</option>
                             <option value="QUALIFIED">Квалифицированный</option>
                             <option value="SUPER_QUALIFIED">Супер-квалифицированный</option>
-
                         </select>
 
                         <button type="submit" className="authority-page-submit-button button"

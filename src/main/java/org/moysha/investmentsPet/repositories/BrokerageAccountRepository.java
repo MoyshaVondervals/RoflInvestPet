@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface BrokerageAccountRepository extends JpaRepository<BrokerageAccount, Long> {
-    Optional<BrokerageAccountRepository> findByUser(User user);
+    Optional<BrokerageAccount> findByUser(User user);
     boolean existsByUser(User user);
     int deleteBrokerageAccountByUser(User user);
-
 }

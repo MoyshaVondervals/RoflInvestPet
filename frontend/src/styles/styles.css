@@ -1,18 +1,34 @@
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--dl-color-theme-neutral-dark);
-
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    z-index: -1;
+@keyframes app-dollars-drift {
+    0% { background-position: 0 120%; }
+    100% { background-position: 120% 0; }
 }
+
+body {
+    background: linear-gradient(135deg, #f8fdfb, #f1f5f9);
+}
+
+.app-shell {
+    position: relative;
+}
+
+.app-dollars {
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='96' height='96' viewBox='0 0 96 96' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='28' y='62' font-size='56' font-family='Arial, sans-serif' fill='%2321a038' fill-opacity='0.18' transform='rotate(-20 40 48)'%3E%24%3C/text%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 140px 140px;
+    opacity: 0.32;
+    animation: app-dollars-drift 1120s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+}
+
+.app-content {
+    position: relative;
+    z-index: 1;
+}
+
 
 :root {
     --dl-layout-size-large: 144px;

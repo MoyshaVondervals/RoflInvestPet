@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Table, Tag } from 'antd';
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import useApiClient from "../../utils/requestController";
 import { sectorEnum, availableForEnum } from '../../utils/enums';
 import StocksTable from "../../components/StocksTable";
+import usePriceStream from "../../hooks/usePriceStream";
 
 const AdmStocks = () => {
     const api = useApiClient();
@@ -27,7 +28,7 @@ const AdmStocks = () => {
 
                 const formattedStocks = response.data.map((stock, index) => ({
                     key: index + 1,
-                    ticker: stock.ticker,
+                    ticker: String(stock.ticker || "").toUpperCase(),
                     name: stock.name,
                     sector: sectorEnum[stock.sector] || stock.sector,
                     lastPrice: stock.lastPrice,
@@ -47,6 +48,26 @@ const AdmStocks = () => {
 
         fetchStocks();
     }, [token]);
+
+    const tickers = useMemo(
+        () => stocks.map((s) => s.ticker).filter(Boolean),
+        [stocks]
+    );
+
+    const handleLivePrice = useCallback((incomingTicker, payload) => {
+        const price = Number(payload?.price);
+        if (!Number.isFinite(price)) return;
+        const normalizedTicker = String(incomingTicker || "").toUpperCase();
+        setStocks((prev) =>
+            prev.map((stock) =>
+                String(stock.ticker || "").toUpperCase() === normalizedTicker
+                    ? { ...stock, lastPrice: price }
+                    : stock
+            )
+        );
+    }, []);
+
+    usePriceStream(tickers, handleLivePrice, token);
 
 
 

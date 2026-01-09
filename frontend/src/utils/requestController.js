@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {clearAuthData} from "../redux/authSlice";
 import {useDispatch} from "react-redux";
 
-const useApiClient = (baseURL: string = 'http://192.168.31.242:8080') => {
+const useApiClient = (baseURL: string = 'http://localhost:8080') => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -30,8 +30,6 @@ const useApiClient = (baseURL: string = 'http://192.168.31.242:8080') => {
             if (axios.isAxiosError(error)) {
                 if (error.response.status === 403) {
                     alert("Сессия истекла")
-                    // dispatch(clearAuthData());
-                    // navigate('/');
                 }
 
                 throw error;
@@ -41,7 +39,6 @@ const useApiClient = (baseURL: string = 'http://192.168.31.242:8080') => {
         }
     };
 
-    // Методы для удобства
     const get = (endpoint: string, config?: AxiosRequestConfig) =>
         request('get', endpoint, undefined, config);
 

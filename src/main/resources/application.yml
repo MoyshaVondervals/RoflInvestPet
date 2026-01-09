@@ -1,11 +1,16 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   application:
-    name: miniCasino
-datasource:
-  url: jdbc:postgresql://localhost:5432/postgres
-  driverClassName: org.postgresql.Driver
-  username: myuser
-  password: secret
+    name: investmentsPet
+  datasource:
+    url: ${INVEST_DB_URL}
+    driverClassName: org.postgresql.Driver
+    username: ${INVEST_DB_USER}
+    password: ${INVEST_DB_PASSWORD}
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,4 +20,7 @@ datasource:
         format_sql: true
 token:
   signing:
-    key: NjU0MzIxMDEwMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY=
+    key: ${INVEST_JWT_SECRET}
+
+adminKey: ${INVEST_ADM_SECRET}
+apiKey: ${INVEST_LLM_API_SECRET}

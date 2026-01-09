@@ -2,16 +2,7 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from "react"
 import { createChart, CrosshairMode } from "lightweight-charts";
 import "../styles/StockCharts.css";
 
-/**
- * Пропсы:
- * - data: [{ timestamp: number | string | Date, price: number }]
- * - height?: number (по умолчанию 380)
- * - initialTimeframe?: "1m" | "5m" | "1h" | "4h" | "1d" | "1w" | "1M"
- * - theme?: "light" | "dark" (по умолчанию "light")
- * - locale?: BCP47 строка локали (напр. "ru-RU"), по умолчанию "ru-RU"
- * - title?: string (заголовок над графиком)
- * - logo?: string (base64 png без префикса data:)
- */
+
 export default function StockChart({
                                        data,
                                        height = 380,
@@ -72,7 +63,6 @@ export default function StockChart({
             };
     }, [theme]);
 
-    // Нормализация входных данных
     const normalizedData = useMemo(() => {
         const toMs = (t) => {
             if (typeof t === "number") return t;
@@ -102,13 +92,12 @@ export default function StockChart({
         }
     }, []);
 
-    // Агрегация по таймфрейму (last в бакете)
     const aggregateByInterval = useCallback((arr, intervalMs) => {
         if (arr.length === 0) return [];
         const buckets = new Map();
         for (const point of arr) {
             const bucketKey = Math.floor(point.ts / intervalMs) * intervalMs;
-            buckets.set(bucketKey, point); // last
+            buckets.set(bucketKey, point);
         }
         return Array.from(buckets.entries())
             .sort((a, b) => a[0] - b[0])
@@ -119,7 +108,6 @@ export default function StockChart({
             }));
     }, []);
 
-    // Десемплинг под ширину
     const downsampleToPixelBudget = useCallback((points, pxWidth) => {
         const minPoints = 60;
         const targetPerPx = 0.7;
@@ -133,20 +121,19 @@ export default function StockChart({
         return out;
     }, []);
 
-    // Подготовка данных под текущую ширину и ТФ
     const prepared = useMemo(() => {
         const intervalMs = timeframeToMs(timeframe);
         const aggregated = aggregateByInterval(normalizedData, intervalMs);
         return downsampleToPixelBudget(aggregated, Math.max(containerWidth, 320));
     }, [normalizedData, timeframe, timeframeToMs, aggregateByInterval, downsampleToPixelBudget, containerWidth]);
 
-    // Форматтеры
+    const timeZone = "UTC";
     const dtfDate = useMemo(
-        () => new Intl.DateTimeFormat(locale, { year: "numeric", month: "2-digit", day: "2-digit" }),
+        () => new Intl.DateTimeFormat(locale, { year: "numeric", month: "2-digit", day: "2-digit", timeZone }),
         [locale]
     );
     const dtfDateTime = useMemo(
-        () => new Intl.DateTimeFormat(locale, { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }),
+        () => new Intl.DateTimeFormat(locale, { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", timeZone }),
         [locale]
     );
     const nf = useMemo(
@@ -154,7 +141,6 @@ export default function StockChart({
         [locale]
     );
 
-    // Инициализация графика
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
@@ -225,7 +211,6 @@ export default function StockChart({
         chartRef.current = chart;
         seriesRef.current = series;
 
-        // Tooltip
         const tip = tooltipRef.current;
         const updateTip = (param) => {
             if (!param || !param.time || !tip) {
@@ -255,7 +240,6 @@ export default function StockChart({
 
         chart.subscribeCrosshairMove(updateTip);
 
-        // Resize
         const ro = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 const w = Math.floor(entry.contentRect.width);
@@ -281,9 +265,8 @@ export default function StockChart({
                 tooltipRef.current = null;
             }
         };
-    }, [height, palette.bg, palette.text, palette.grid, palette.border, palette.crosshair, palette.line, palette.areaTop, palette.areaBottom, timeframe]); // форматтеры не включаем, чтобы не пересоздавать по локали
+    }, [height, palette.bg, palette.text, palette.grid, palette.border, palette.crosshair, palette.line, palette.areaTop, palette.areaBottom, timeframe]);
 
-    // Обновление данных серии
     useEffect(() => {
         if (seriesRef.current) {
             seriesRef.current.setData(prepared);
@@ -291,7 +274,6 @@ export default function StockChart({
         }
     }, [prepared]);
 
-    // ---------- ЗУМ ----------
     const zoomBy = useCallback((ratio) => {
         const ts = chartRef.current?.timeScale();
         if (!ts) return;
@@ -322,7 +304,6 @@ export default function StockChart({
         zoomBy(1.25);
     }, [zoomBy]);
 
-    // Клавиши +/- для зума
     useEffect(() => {
         const el = containerRef.current;
         if (!el) return;

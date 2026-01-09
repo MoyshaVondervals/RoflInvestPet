@@ -20,7 +20,7 @@ const LoginPage = () => {
     try {
       if (!username || !password) {
         setMessage("Заполните оба поля");
-        return; // важно
+        return;
       }
 
       const response = await api.post('/auth/sign-in', {

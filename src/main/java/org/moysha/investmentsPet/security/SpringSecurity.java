@@ -38,6 +38,7 @@ public class SpringSecurity {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/","auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/endpoint", "/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -46,9 +47,6 @@ public class SpringSecurity {
         return http.build();
     }
 
-    /**
-     * Конфигурация CORS — разрешает все запросы с любых доменов
-     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         var corsConfiguration = new CorsConfiguration();

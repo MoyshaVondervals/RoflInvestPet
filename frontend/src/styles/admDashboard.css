@@ -4,7 +4,6 @@
     align-items: center;
     min-height: 90vh;
     padding: 2rem;
-    background-color: var(--dl-color-theme-primary2);
     box-sizing: border-box;
 }
 
@@ -41,7 +40,6 @@
     gap: 1.5rem;
 }
 
-/* Кнопка (блок-единица) */
 .dashboard-menu-unit {
     background-color: var(--dl-color-theme-neutral-light);
     border-radius: var(--dl-layout-radius-radius8);
@@ -71,13 +69,11 @@
     font-size: 1rem;
 }
 
-/* ===== ПРАВАЯ КОЛОНКА (таблица) ===== */
 .table-panel {
     flex: 2;
     overflow-x: auto;
 }
 
-/* Стили таблицы */
 .stocks-table {
     width: 100%;
     border-collapse: collapse;
@@ -99,7 +95,6 @@
     color: #333;
 }
 
-/* ===== АДАПТАЦИЯ ===== */
 @media (max-width: 768px) {
     .admin-dashboard-container-row {
         flex-direction: column;

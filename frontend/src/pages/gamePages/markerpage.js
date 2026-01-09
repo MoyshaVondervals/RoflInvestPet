@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Table, Tag, Input, Button, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
@@ -7,6 +7,7 @@ import useApiClient from "../../utils/requestController";
 import { useSelector } from "react-redux";
 import StocksTable from "../../components/StocksTable";
 import {useNavigate} from "react-router-dom";
+import usePriceStream from "../../hooks/usePriceStream";
 
 const MarkerPage = () => {
     const [loading, setLoading] = useState(false);
@@ -32,7 +33,6 @@ const MarkerPage = () => {
         }
     };
 
-    // 🔍 Логика поиска
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -129,7 +129,7 @@ const MarkerPage = () => {
 
                 const formattedStocks = response.data.map((stock, index) => ({
                     key: index + 1,
-                    ticker: stock.ticker,
+                    ticker: String(stock.ticker || "").toUpperCase(),
                     name: stock.name,
                     sector: sectorEnum[stock.sector] || stock.sector,
                     lastPrice: stock.lastPrice,
@@ -150,6 +150,25 @@ const MarkerPage = () => {
         fetchStocks();
     }, [token]);
 
+    const tickers = useMemo(
+        () => stocks.map((s) => s.ticker).filter(Boolean),
+        [stocks]
+    );
+
+    const handleLivePrice = useCallback((incomingTicker, payload) => {
+        const price = Number(payload?.price);
+        if (!Number.isFinite(price)) return;
+        const normalizedTicker = String(incomingTicker || "").toUpperCase();
+        setStocks((prev) =>
+            prev.map((stock) =>
+                String(stock.ticker || "").toUpperCase() === normalizedTicker
+                    ? { ...stock, lastPrice: price }
+                    : stock
+            )
+        );
+    }, []);
+
+    usePriceStream(tickers, handleLivePrice, token);
 
 
 

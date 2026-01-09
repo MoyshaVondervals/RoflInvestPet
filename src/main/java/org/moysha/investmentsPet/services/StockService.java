@@ -6,28 +6,37 @@ import org.moysha.investmentsPet.dto.StockPricesResp;
 import org.moysha.investmentsPet.dto.StockTickerReq;
 import org.moysha.investmentsPet.dto.NewStockReq;
 import org.moysha.investmentsPet.dto.StockRes;
+import org.moysha.investmentsPet.enums.GrowPattern;
+import org.moysha.investmentsPet.enums.GrowSpeed;
 import org.moysha.investmentsPet.exceptions.MessageException;
 import org.moysha.investmentsPet.models.Stock;
+import org.moysha.investmentsPet.models.StockChangeTarget;
 import org.moysha.investmentsPet.models.StockPrice;
+import org.moysha.investmentsPet.repositories.BrokerageAccountRepository;
+import org.moysha.investmentsPet.repositories.BrokeragePositionRepository;
 import org.moysha.investmentsPet.repositories.StockPricesRepository;
 import org.moysha.investmentsPet.repositories.StockRepository;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
 public class StockService {
     private final StockRepository repository;
     private final StockPricesRepository stockPricesRepository;
+    private final BrokeragePositionRepository brokeragePositionRepository;
+    private final BrokerageAccountRepository brokerageAccountRepository;
 
     public Stock createNewStock(NewStockReq request, MultipartFile logoFile) throws IOException {
         if (logoFile == null || logoFile.isEmpty()) {
@@ -54,7 +63,19 @@ public class StockService {
                 .lastUpdate(LocalDateTime.now())
                 .build();
 
+
+        StockChangeTarget changeTarget = StockChangeTarget.builder()
+                .stock(stock)
+                .currentPrice(request.getLastPrice())
+                .startPrice(request.getLastPrice())
+                .targetPercent((double) Math.round(ThreadLocalRandom.current().nextDouble(0.02, 0.06)*100)/100)
+                .pattern(GrowPattern.LOGISTIC)
+                .growSpeed(GrowSpeed.MEDIUM)
+                .lastUpdated(LocalDateTime.now())
+                .build();
+
         stock.addPrice(stockPrice);
+        stock.setChangeTarget(changeTarget);
 
 
 
@@ -79,47 +100,33 @@ public class StockService {
 
     }
 
-    @Scheduled(cron = "0 */1 * * * *")
-    @Async
-    @Transactional
-    public void getAiNews() throws IOException, InterruptedException {
-        List<Stock> stockList = repository.findAll();
-        for (Stock stock : stockList) {
-            StockPrice lastPrice = stockPricesRepository
-                    .findLatestPrice(stock.getId())
-                    .get(0);
-            Double lastPriceValue = lastPrice.getPrice();
-            System.err.println(stock.getTicker()+" | "+lastPriceValue);
-            StockPrice stockPrice = StockPrice.builder()
-                    .price(lastPriceValue*1.02)
-                    .lastUpdate(LocalDateTime.now())
-                    .stock(stock)
-                    .build();
-
-            stockPricesRepository.save(stockPrice);
-
-        }
-
-
-
-
-
+    public Optional<Stock> getById(Long id){
+        return repository.findById(id);
     }
-
 
     @Transactional
     public void deleteStock(StockTickerReq request) {
-        System.err.println("meow1");
-        if (repository.existsByTicker(request.getTicker())) {
-            System.err.println("meow2");
-            repository.removeByTicker(request.getTicker());
-            System.err.println("meow3");
-        }else{
-            System.err.println("meow4");
+        String ticker = request.getTicker().toUpperCase();
+        Stock stock = repository.findByTicker(ticker);
+        if (stock == null) {
             throw new MessageException("Такой акции нет");
-
         }
 
+        var latestPrices = stockPricesRepository.findLatestPrice(stock.getId());
+        BigDecimal latestPrice = latestPrices.isEmpty()
+                ? null
+                : BigDecimal.valueOf(latestPrices.get(0).getPrice());
+
+        var positions = brokeragePositionRepository.findAllByStock(stock);
+        for (var position : positions) {
+            BigDecimal price = latestPrice != null ? latestPrice : position.getAveragePrice();
+            BigDecimal revenue = price.multiply(position.getQuantity()).setScale(4, RoundingMode.HALF_UP);
+            var account = position.getAccount();
+            account.setBalance(account.getBalance().add(revenue));
+            brokerageAccountRepository.save(account);
+        }
+        brokeragePositionRepository.deleteAll(positions);
+        repository.delete(stock);
     }
 
 

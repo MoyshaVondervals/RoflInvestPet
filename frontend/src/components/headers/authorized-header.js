@@ -34,10 +34,9 @@ const Header = () => {
               onClick={()=>navigate("/dashboard")}
           />
 
-          {/* Десктопное меню */}
           <div className="desktop-menu">
             <nav className="nav-links">
-              <span className="nav-link" onClick={()=>navigate("/stockPage")}>Главная</span>
+              <span className="nav-link" onClick={()=>navigate("/dashboard")}>Главная</span>
               <span className="nav-link" onClick={()=>navigate("/market")}>Рынок</span>
               <span className="nav-link" onClick={()=>navigate("/news")}>Новости</span>
               <span className="nav-link" onClick={()=>navigate("/about")}>О проекте</span>
@@ -58,14 +57,12 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Бургер-меню */}
           <div className="burger-menu" onClick={toggleMobileMenu}>
             <svg viewBox="0 0 1024 1024" className="burger-icon">
               <path d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"></path>
             </svg>
           </div>
 
-          {/* Мобильное меню */}
           <div className={`mobile-menu ${isMobileMenuOpen ? 'show' : ''}`}>
             <div className="mobile-nav">
               <div className="mobile-top">
@@ -82,7 +79,7 @@ const Header = () => {
                 </div>
               </div>
               <nav className="mobile-links">
-                <span className="mobile-link">Главная</span>
+                <span className="mobile-link" onClick={() => mobileNavigate("/dashboard")}>Главная</span>
                 <span className="mobile-link" onClick={() => mobileNavigate("/market")}>Рынок</span>
                 <span className="mobile-link" onClick={() => mobileNavigate("/news")}>Новости</span>
                 <span className="mobile-link" onClick={() => mobileNavigate("/about")}>О проекте</span>

@@ -5,7 +5,7 @@ const isBrowser = typeof window !== "undefined";
 const initialState = {
     token: isBrowser ? localStorage.getItem("jwtToken") : null,
     username: isBrowser ? localStorage.getItem("username") : null,
-    role: isBrowser ? localStorage.getItem("role") : null, // Новое поле
+    role: isBrowser ? localStorage.getItem("role") : null,
 };
 
 const authSlice = createSlice({

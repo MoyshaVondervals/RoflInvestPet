@@ -1,7 +1,7 @@
 import './App.css';
 import './styles/styles.css';
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import { ConfigProvider } from "antd";   // ✅ импортируем Ant Design тему
+import { ConfigProvider } from "antd";
 
 import RegisterPage from "./pages/authorityPages/register-page";
 import WelcomePage from "./pages/WelcomePage";
@@ -35,31 +35,31 @@ function App() {
                 },
             }}
         >
-            <div className="App">
-                <BrowserRouter>
-                    <Header />
-                    <Routes>
-                        <Route path="/" element={<WelcomePage />} />
-                        <Route path="/auth/sign-in" element={<LoginPage />} />
-                        <Route path="/auth/sign-up" element={<RegisterPage />} />
-                        <Route path="/about" element={<AboutProjectPage />} />
-                        <Route path="/aboutDevelopment" element={<AboutDevelopmentPage />} />
-                        <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
-                        <Route path="/bugReportPage" element={<PrivateRoute element={<BugReportPage />} />} />
-                        <Route path="/becomeAdminPage" element={<PrivateRoute element={<BecomeAdminPage />} />} />
-                        <Route path="/news" element={<PrivateRoute element={<NewsPage />} />} />
-                        <Route path="/market" element={<PrivateRoute element={<MarkerPage />} />} />
-                        <Route path="/stock/:ticker" element={<StockPage />} />
-
-
-
-                        <Route path="/adminDashboard" element={<PrivateRoute element={<AdminDashboard />} requiredRole="ROLE_ADMIN" />} />
-                        <Route path="/admStocks" element={<PrivateRoute element={<AdmStocks />} requiredRole="ROLE_ADMIN" />} />
-                        <Route path="/newStock" element={<PrivateRoute element={<AddNewStock />} requiredRole="ROLE_ADMIN" />} />
-                        <Route path="/deleteStock" element={<PrivateRoute element={<DeleteStock />} requiredRole="ROLE_ADMIN" />} />
-                        <Route path="/myProfile" element={<PrivateRoute element={<MyProfilePage />} />} />
-                    </Routes>
-                </BrowserRouter>
+            <div className="App app-shell">
+                <div className="app-dollars" aria-hidden="true" />
+                <div className="app-content">
+                    <BrowserRouter>
+                        <Header />
+                        <Routes>
+                            <Route path="/" element={<WelcomePage />} />
+                            <Route path="/auth/sign-in" element={<LoginPage />} />
+                            <Route path="/auth/sign-up" element={<RegisterPage />} />
+                            <Route path="/about" element={<AboutProjectPage />} />
+                            <Route path="/aboutDevelopment" element={<AboutDevelopmentPage />} />
+                            <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
+                            <Route path="/bugReportPage" element={<PrivateRoute element={<BugReportPage />} />} />
+                            <Route path="/becomeAdminPage" element={<PrivateRoute element={<BecomeAdminPage />} />} />
+                            <Route path="/news" element={<PrivateRoute element={<NewsPage />} />} />
+                            <Route path="/market" element={<PrivateRoute element={<MarkerPage />} />} />
+                            <Route path="/stock/:ticker" element={<StockPage />} />
+                            <Route path="/adminDashboard" element={<PrivateRoute element={<AdminDashboard />} requiredRole="ROLE_ADMIN" />} />
+                            <Route path="/admStocks" element={<PrivateRoute element={<AdmStocks />} requiredRole="ROLE_ADMIN" />} />
+                            <Route path="/newStock" element={<PrivateRoute element={<AddNewStock />} requiredRole="ROLE_ADMIN" />} />
+                            <Route path="/deleteStock" element={<PrivateRoute element={<DeleteStock />} requiredRole="ROLE_ADMIN" />} />
+                            <Route path="/myProfile" element={<PrivateRoute element={<MyProfilePage />} />} />
+                        </Routes>
+                    </BrowserRouter>
+                </div>
             </div>
         </ConfigProvider>
     );

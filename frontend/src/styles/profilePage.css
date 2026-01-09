@@ -39,7 +39,6 @@
     border: var(--border);
 }
 
-/* --- блоки --- */
 .grid-box1{ grid-area: A; display: flex; align-items: center; justify-content: center; }
 .grid-box2{ grid-area: B; background: #fff; border-radius: var(--radius); padding: 24px; border: var(--border); }
 .grid-box3{ grid-area: C; display:flex; align-items:center; justify-content:center; }
@@ -210,14 +209,12 @@
 
 }
 
-/* Скелетон в блоке 2 */
 .box2-skeleton{ display:flex; flex-direction:column; gap:14px; }
 .sk-line{ height:16px; border-radius:8px; background: linear-gradient(90deg,#e5e7eb 25%, #f3f4f6 37%, #e5e7eb 63%); background-size:400% 100%; animation: shimmer 1.4s ease infinite;}
 .sk-line.lg{ height:36px; width:60%; }
 .sk-line.md{ width:90%; }
 .sk-line.sm{ width:75%; }
 
-/* Ошибки */
 .error-box{
     margin-top: 8px;
     fill: var(--dl-color-theme-accent2);

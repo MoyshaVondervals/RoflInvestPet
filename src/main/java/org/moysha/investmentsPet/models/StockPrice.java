@@ -23,7 +23,10 @@ public class StockPrice {
 
     private LocalDateTime lastUpdate;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stock_id", nullable = false)
+    @JoinColumn(name = "stock_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_stock_prices_stock"))
     private Stock stock;
 }

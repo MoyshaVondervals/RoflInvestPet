@@ -6,8 +6,6 @@ import {setAuthData} from "../../redux/authSlice";
 import axios from 'axios';
 import useApiClient from "../../utils/requestController";
 
-
-
 const LoginPage = () => {
   const api = useApiClient();
   const dispatch = useDispatch();

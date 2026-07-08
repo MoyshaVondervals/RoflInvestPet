@@ -3,7 +3,7 @@ import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
 const normalizeBaseUrl = (url) => {
-    if (!url) return "http://localhost:8080";
+    if (!url) return window.location.origin;
     return url.endsWith("/") ? url.slice(0, -1) : url;
 };
 

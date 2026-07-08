@@ -116,7 +116,6 @@ const MarkerPage = () => {
             ),
     });
 
-
     useEffect(() => {
         const fetchStocks = async () => {
             try {
@@ -169,8 +168,6 @@ const MarkerPage = () => {
     }, []);
 
     usePriceStream(tickers, handleLivePrice, token);
-
-
 
     return (
         <div className="admin-dashboard">

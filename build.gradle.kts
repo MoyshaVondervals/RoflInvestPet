@@ -47,10 +47,6 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-
-
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0-rc1")
 }
 
@@ -59,3 +55,51 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+sourceSets {
+    main {
+        java.setSrcDirs(emptyList<String>())
+        resources.setSrcDirs(emptyList<String>())
+    }
+    test {
+        java.setSrcDirs(emptyList<String>())
+        resources.setSrcDirs(emptyList<String>())
+    }
+}
+
+tasks.named("compileJava") {
+    enabled = false
+}
+
+tasks.named("processResources") {
+    enabled = false
+}
+
+tasks.named("classes") {
+    enabled = false
+}
+
+tasks.named("compileTestJava") {
+    enabled = false
+}
+
+tasks.named("processTestResources") {
+    enabled = false
+}
+
+tasks.named("testClasses") {
+    enabled = false
+}
+
+tasks.named("test") {
+    enabled = false
+}
+
+tasks.named("bootJar") {
+    enabled = false
+}
+
+tasks.named("jar") {
+    enabled = false
+}
+

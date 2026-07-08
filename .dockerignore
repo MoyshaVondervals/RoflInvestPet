@@ -1,0 +1,11 @@
+.git
+.gradle
+build
+modules/*/build
+pgdata
+.run-logs
+*.zip
+frontend/node_modules
+frontend/build
+.idea
+.DS_Store

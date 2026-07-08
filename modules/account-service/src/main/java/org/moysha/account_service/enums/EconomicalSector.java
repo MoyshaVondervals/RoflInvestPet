@@ -1,0 +1,19 @@
+package org.moysha.account_service.enums;
+
+public enum EconomicalSector {
+    FINANCIAL,
+    SOFTWARE,
+    RETAIL,
+    HEALTHCARE,
+    LOGISTICS,
+    METALLURGY,
+    RESOURCE_EXTRACTION,
+    NETWORK_TECHNOLOGIES,
+    ENERGY,
+    CONSTRUCTION,
+    MANUFACTURING,
+    AGRICULTURE,
+    SCIENCE_EDUCATION,
+    ENTERTAINMENT_MEDIA
+
+}

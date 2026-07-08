@@ -12,7 +12,6 @@ import Dashboard from "./pages/Dashboard";
 import Header from "./components/headers/Header";
 import AboutDevelopmentPage from "./pages/aboutPages/AboutDevelopment";
 import BugReportPage from "./pages/BugReportPage";
-import BecomeAdminPage from "./pages/adminPages/BecomeAdminPage";
 import AdminDashboard from "./pages/adminPages/AdminDashboard";
 import AdmStocks from "./pages/adminPages/AdmStocks";
 import AddNewStock from "./pages/adminPages/AddNewStockPage";
@@ -22,7 +21,6 @@ import MyProfilePage from "./pages/MyProfilePage";
 import NewsPage from "./pages/gamePages/NewsPage";
 import MarkerPage from "./pages/gamePages/markerpage";
 import StockPage from "./pages/gamePages/StockPage";
-
 
 function App() {
     return (
@@ -48,7 +46,6 @@ function App() {
                             <Route path="/aboutDevelopment" element={<AboutDevelopmentPage />} />
                             <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
                             <Route path="/bugReportPage" element={<PrivateRoute element={<BugReportPage />} />} />
-                            <Route path="/becomeAdminPage" element={<PrivateRoute element={<BecomeAdminPage />} />} />
                             <Route path="/news" element={<PrivateRoute element={<NewsPage />} />} />
                             <Route path="/market" element={<PrivateRoute element={<MarkerPage />} />} />
                             <Route path="/stock/:ticker" element={<StockPage />} />

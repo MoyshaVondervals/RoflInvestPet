@@ -1,4 +1,3 @@
-
 import "../../styles/aboutPage.css"
 const AboutProjectPage = () => {
 

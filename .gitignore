@@ -33,7 +33,12 @@ out/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
-.vscode/
 
-compose.yaml
+.env
+!.env.example
+
+pgdata/
+.run-logs/
+*.zip
+.DS_Store
+**/.DS_Store

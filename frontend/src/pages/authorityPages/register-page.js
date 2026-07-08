@@ -18,8 +18,6 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-
   const handleSubmit = async () => {
     try{
       if (!username || !email || !password){
@@ -36,7 +34,6 @@ const RegisterPage = () => {
         username: response.data.username,
         role: response.data.role,
       }));
-
 
       navigate('/dashboard');
 

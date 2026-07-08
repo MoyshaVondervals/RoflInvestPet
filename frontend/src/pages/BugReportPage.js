@@ -1,4 +1,3 @@
-
 import "../styles/aboutPage.css"
 import React, {useState} from "react";
 import axios from "axios";
@@ -20,7 +19,6 @@ const BugReportPage = () => {
         console.log("USERNAME",username)
         try {
 
-
             const response = await api.post(
                 '/bugReport',
                 {
@@ -35,7 +33,6 @@ const BugReportPage = () => {
                     }
                 }
             );
-
 
         }catch (error) {
             console.error('Bug report error:', error);

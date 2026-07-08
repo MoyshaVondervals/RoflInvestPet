@@ -161,9 +161,6 @@ const MyProfilePage = () => {
                 }
             });
 
-
-
-
         } catch (e) {
             setError("Не удалось сохранить профиль. Проверьте сеть и попробуйте снова.");
         } finally {
@@ -194,7 +191,7 @@ const MyProfilePage = () => {
         setDeleting(true);
         setError("");
         try {
-            const res = await axios.get('http://localhost:8080/deleteMyAccount', {
+            const res = await axios.get('/deleteMyAccount', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             dispatch(clearAuthData());
@@ -310,10 +307,6 @@ const MyProfilePage = () => {
                                 </button>
                                 <button className="btn ghost" onClick={brag} disabled={loading}>
                                     Похвастаться
-                                </button>
-                                <button type="button" className="btn secondary"
-                                        onClick={() => navigate('/becomeAdminPage')}>
-                                    Стать админом
                                 </button>
                             </>
                         ) : (

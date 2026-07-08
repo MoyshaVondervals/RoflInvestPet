@@ -14,8 +14,6 @@ const AdmStocks = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-
-
     useEffect(() => {
         const fetchStocks = async () => {
             try {
@@ -68,9 +66,6 @@ const AdmStocks = () => {
     }, []);
 
     usePriceStream(tickers, handleLivePrice, token);
-
-
-
 
     return (
         <div className="admin-dashboard">

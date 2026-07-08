@@ -1,12 +1,10 @@
 import React, {useState} from 'react'
 
-
 import '../../styles/login-page.css'
 import imageCompression from "browser-image-compression";
 import axios from "axios";
 import {useSelector} from "react-redux";
 import useApiClient from "../../utils/requestController";
-
 
 const AddNewStock = () => {
     const api = useApiClient();
@@ -18,11 +16,6 @@ const AddNewStock = () => {
     const [lastPrice, setLastPrice] = useState('')
     const [availableFor, setAvailableFor] = useState('')
     const token = useSelector((state) => state.auth.token);
-
-
-
-
-
 
     const handleSubmit = async () => {
         try {
@@ -37,8 +30,6 @@ const AddNewStock = () => {
             };
             const compressedFile = await imageCompression(logo, options);
 
-
-
             const formData = new FormData();
             const payload = {
                 ticker: ticker.toUpperCase(),
@@ -51,7 +42,6 @@ const AddNewStock = () => {
             formData.append("payload", new Blob([JSON.stringify(payload)], {
                 type: "application/json"
             }));
-
 
             formData.append("logo", compressedFile);
 
@@ -139,7 +129,6 @@ const AddNewStock = () => {
                             <option value="ENTERTAINMENT_MEDIA">Развлечения и медиа</option>
                         </select>
 
-
                         <input
                             type="text"
                             inputMode="decimal"
@@ -156,7 +145,6 @@ const AddNewStock = () => {
                                 }
                             }}
                         />
-
 
                         <select
                             className="authority-page-select"
@@ -181,6 +169,5 @@ const AddNewStock = () => {
         </div>
     )
 }
-
 
 export default AddNewStock

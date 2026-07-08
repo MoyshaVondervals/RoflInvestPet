@@ -1,4 +1,3 @@
-
 export const sectorEnum = {
     ENERGY: "Энергетика",
     HEALTHCARE: "Здравоохранение",

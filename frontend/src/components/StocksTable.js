@@ -3,7 +3,6 @@ import { Table, Tag, Input, Button, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 
-
 const StocksTable = ({ data, loading, onRowClick }) => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');

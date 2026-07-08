@@ -14,11 +14,35 @@
 ## Технологии
 - **Backend:** Spring Boot, Spring Data JPA, Spring Security  
 - **DB:** PostgreSQL  
+- **Messaging:** Apache Kafka (межсервисное общение)  
 - **Frontend:** React, Redux  
 - **Tools:** Docker, Git  
 
 ---
 
+## Архитектура
+
+Событийно-ориентированные микросервисы, общающиеся через Kafka.
+
+```
+
+              ┌──────────────────┐   ┌──────────────────┐
+              │  account-service │   │  market-service  │
+              │  auth, портфель, │   │  акции, цены,    │
+              │  профиль         │   │  новости, WS     │
+              └────────┬─────────┘   └──────────┬───────┘
+                       │  Kafka: trade-executed │
+                       └────────────────────────┘
+                                 │
+                          ┌──────┴──────┐
+                          │  PostgreSQL │
+                          └─────────────┘
+```
+
+
+
+
+---
 ## Скриншоты
 - **WelcomePage:**
 ![WelcomePage](images/welcomeImage.png)

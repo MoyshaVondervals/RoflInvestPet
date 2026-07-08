@@ -1,0 +1,51 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  application:
+    name: market-service
+  datasource:
+    url: ${INVEST_DB_URL:jdbc:h2:mem:marketdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    driverClassName: ${INVEST_DB_DRIVER:org.h2.Driver}
+    username: ${INVEST_DB_USER:sa}
+    password: ${INVEST_DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP:market-service}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.value.default.type: org.moysha.market_service.dto.TradeExecutedEvent
+        spring.json.use.type.headers: false
+        spring.json.trusted.packages: "*"
+
+app:
+  kafka:
+    topics:
+      trade-executed: ${KAFKA_TOPIC_TRADE_EXECUTED:trade-executed}
+
+server:
+  port: ${SERVER_PORT:8082}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+token:
+  signing:
+    key: ${INVEST_JWT_SECRET}
+
+adminKey: ${INVEST_ADM_SECRET}
+apiKey: ${INVEST_LLM_API_SECRET}

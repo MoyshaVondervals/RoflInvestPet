@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from "react"
 import { createChart, CrosshairMode } from "lightweight-charts";
 import "../styles/StockCharts.css";
 
-
 export default function StockChart({
                                        data,
                                        height = 380,

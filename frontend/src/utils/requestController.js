@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {clearAuthData} from "../redux/authSlice";
 import {useDispatch} from "react-redux";
 
-const useApiClient = (baseURL: string = 'http://localhost:8080') => {
+const useApiClient = (baseURL: string = '') => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

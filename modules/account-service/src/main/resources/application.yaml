@@ -1,0 +1,49 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  application:
+    name: account-service
+  datasource:
+    url: ${INVEST_DB_URL:jdbc:h2:mem:accountdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    driverClassName: ${INVEST_DB_DRIVER:org.h2.Driver}
+    username: ${INVEST_DB_USER:sa}
+    password: ${INVEST_DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
+app:
+  kafka:
+    topics:
+      trade-executed: ${KAFKA_TOPIC_TRADE_EXECUTED:trade-executed}
+
+server:
+  port: ${SERVER_PORT:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+# Секреты берутся только из переменных окружения (без дефолтов).
+# Если переменная не задана — приложение не стартует (fail-fast). См. .env / .env.example.
+token:
+  signing:
+    key: ${INVEST_JWT_SECRET}
+
+adminKey: ${INVEST_ADM_SECRET}
+apiKey: ${INVEST_LLM_API_SECRET}

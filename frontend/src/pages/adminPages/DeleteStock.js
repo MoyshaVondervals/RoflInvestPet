@@ -5,8 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import useApiClient from "../../utils/requestController";
 
-
-
 const DeleteStock = () => {
     const api = useApiClient();
     const dispatch = useDispatch();
@@ -28,7 +26,6 @@ const DeleteStock = () => {
                         'Authorization': `Bearer ${token}`
                     }
                 })
-
 
         }catch (error) {
             console.error('Failed to delete stock:', error);
@@ -62,7 +59,6 @@ const DeleteStock = () => {
                             className="authority-page-input input"
                             onChange={(e) => setTicker(e.target.value)}
                         />
-
 
                         <button type="submit" className="authority-page-delete-button button"
                                 onClick={handleSubmit}>
